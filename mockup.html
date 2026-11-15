@@ -1,0 +1,1524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>PlumeRoute UI Mockup &amp; Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#f6f5f2; --bg2:#efece6; --surface:#ffffff; --surface2:#faf9f6;
+    --ink:#171c22; --ink2:#3d4753; --ink3:#6b7684;
+    --line:#ddd8cd; --line2:#c9c2b2;
+    --ember:#d9510d; --ember-strong:#b63f04; --ember-soft:#fdeee3;
+    --red:#c62f1d; --red-soft:#fbeae7;
+    --amber:#9a6200; --amber-soft:#fdf3da;
+    --green:#177245; --green-soft:#e4f3ea;
+    --blue:#1c5f8a; --blue-soft:#e6f0f7;
+    --map-bg:#131c26;
+    --chip:#efece6;
+    --shadow:0 1px 2px rgba(23,28,34,.06),0 8px 28px -12px rgba(23,28,34,.18);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#10141a; --bg2:#0b0e13; --surface:#171d26; --surface2:#1c232f;
+      --ink:#eef1f5; --ink2:#c3ccd7; --ink3:#8d99a8;
+      --line:#2a3342; --line2:#38445a;
+      --ember:#f4702e; --ember-strong:#ff8a4d; --ember-soft:#33200f;
+      --red:#ff6a55; --red-soft:#381d17;
+      --amber:#f0b84a; --amber-soft:#37290e;
+      --green:#4cc983; --green-soft:#123324;
+      --blue:#5aa7d6; --blue-soft:#142c3f;
+      --chip:#232c3a;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -12px rgba(0,0,0,.55);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+  button,[role="button"],select,summary,input:not([type="checkbox"],[type="radio"]){min-height:2.25rem}
+  button{font-family:inherit;cursor:pointer}
+  a{color:var(--ember-strong)}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  section{padding:56px 0 8px}
+  h1,h2,h3{line-height:1.15;margin:0;letter-spacing:-.01em}
+  h2{font-size:clamp(24px,3.4vw,34px);font-weight:700}
+  h3{font-size:19px;font-weight:600}
+  p{margin:0}
+  .sec-head{max-width:760px;margin-bottom:26px}
+  .sec-head p{color:var(--ink2);margin-top:10px;font-size:16.5px}
+  .sec-tag{display:inline-flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ember-strong);margin-bottom:12px}
+  .sec-tag::before{content:"";width:22px;height:2px;background:var(--ember);display:inline-block}
+
+  /* ---------- hero ---------- */
+  .hero{padding:44px 0 10px;border-bottom:1px solid var(--line)}
+  .hero-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:18px}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid var(--line2);border-radius:999px;font-size:12.5px;font-weight:600;color:var(--ink2);background:var(--surface)}
+  .pill.hot{border-color:var(--ember);color:var(--ember-strong);background:var(--ember-soft)}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+  .hero h1{font-size:clamp(34px,5.6vw,58px);font-weight:700;letter-spacing:-.02em}
+  .hero h1 .accent{color:var(--ember)}
+  .hero .lede{margin-top:14px;font-size:clamp(17px,2.2vw,20px);color:var(--ink2);max-width:760px}
+  .hero .lede strong{color:var(--ink)}
+  .hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:30px 0 34px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow)}
+  .stat b{display:block;font-size:26px;font-weight:700;letter-spacing:-.01em}
+  .stat span{font-size:13px;color:var(--ink3);font-weight:500}
+  .hero-note{display:flex;gap:10px;align-items:flex-start;background:var(--amber-soft);border:1px solid var(--amber);border-radius:var(--radius);padding:14px 16px;margin-bottom:36px;font-size:14.5px;color:var(--ink)}
+  .hero-note svg{flex:none;margin-top:2px}
+
+  /* ---------- sticky nav ---------- */
+  .subnav{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .subnav-in{display:flex;gap:4px;overflow-x:auto;padding:8px 0;scrollbar-width:none}
+  .subnav-in::-webkit-scrollbar{display:none}
+  .subnav a{flex:none;display:inline-flex;align-items:center;min-height:36px;padding:6px 14px;border-radius:999px;text-decoration:none;color:var(--ink2);font-size:14px;font-weight:600}
+  .subnav a:hover{background:var(--chip);color:var(--ink)}
+  .subnav a.active{background:var(--ink);color:var(--bg)}
+
+  /* ---------- app frame / live mockup ---------- */
+  .frame{background:var(--surface);border:1px solid var(--line2);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+  .frame-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--surface2)}
+  .frame-bar .dots{display:flex;gap:6px}
+  .frame-bar .dots i{width:11px;height:11px;border-radius:50%;background:var(--line2);display:block}
+  .frame-bar .url{flex:1;max-width:420px;margin:0 auto;background:var(--chip);border-radius:8px;padding:5px 12px;font-size:12.5px;color:var(--ink2);text-align:center;font-family:"IBM Plex Mono",monospace}
+  .sample-tag{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:600;letter-spacing:.1em;background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber);padding:3px 8px;border-radius:6px;white-space:nowrap}
+  .appbar{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#0d1319;color:#eef1f5;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;letter-spacing:-.01em}
+  .brand .mark{width:32px;height:32px;border-radius:9px;background:var(--ember);display:grid;place-items:center;flex:none}
+  .mode-switch{display:flex;background:#1b2634;border-radius:999px;padding:3px;margin-left:6px}
+  .mode-switch button{border:0;background:transparent;color:#9fb2c3;font-weight:600;font-size:13.5px;padding:6px 16px;border-radius:999px;min-height:36px}
+  .mode-switch button.on{background:#eef1f5;color:#131c26}
+  .appbar .search{flex:1;min-width:180px;display:flex;align-items:center;gap:8px;background:#1b2634;border:1px solid #2b3a4d;border-radius:10px;padding:0 12px;min-height:40px;color:#9fb2c3;font-size:14px}
+  .appbar .search input{flex:1;background:transparent;border:0;outline:0;color:#eef1f5;font-size:14px;font-family:inherit;min-height:38px}
+  .appbar .search input::placeholder{color:#7286a0}
+  .voice-btn{display:inline-flex;align-items:center;gap:8px;background:var(--ember);color:#fff;border:0;border-radius:10px;padding:0 16px;font-weight:600;font-size:14px;min-height:40px}
+  .voice-btn:active{transform:scale(.98)}
+  .freshness{margin-left:auto;font-size:12px;color:#8fa5ba;font-family:"IBM Plex Mono",monospace}
+  .mapwrap{position:relative;background:var(--map-bg)}
+  .mapwrap svg{display:block;width:100%;height:auto}
+  .map-legend{position:absolute;left:12px;bottom:12px;background:rgba(10,15,21,.86);color:#cfdce9;border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:9px 12px;font-size:12px;display:flex;flex-direction:column;gap:5px;backdrop-filter:blur(4px)}
+  .map-legend div{display:flex;align-items:center;gap:8px}
+  .map-legend i{width:14px;height:10px;border-radius:3px;display:block;flex:none}
+  .wind-chip{position:absolute;top:12px;right:12px;background:rgba(10,15,21,.86);color:#cfdce9;border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:8px 12px;font-size:12.5px;font-family:"IBM Plex Mono",monospace;display:flex;gap:8px;align-items:center}
+
+  .console{display:grid;grid-template-columns:1.15fr .85fr;gap:0;border-top:1px solid var(--line)}
+  .console-left{padding:20px;border-right:1px solid var(--line)}
+  .console-right{padding:20px;background:var(--surface2)}
+  .ctl-label{font-family:"IBM Plex Mono",monospace;font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .ctl-label output{color:var(--ember-strong);font-size:13px;letter-spacing:0;text-transform:none}
+  input[type=range]{width:100%;accent-color:var(--ember);height:36px;cursor:pointer}
+  .ticks{display:flex;justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink3);margin-top:-4px}
+  .eta-line{margin-top:14px;background:var(--ember-soft);border:1px solid color-mix(in srgb,var(--ember) 35%,transparent);border-radius:10px;padding:11px 14px;font-size:14.5px}
+  .eta-line b{color:var(--ember-strong)}
+  .toggle-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .tgl{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink2);border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600;min-height:38px}
+  .tgl .sw{width:30px;height:17px;border-radius:999px;background:var(--line2);position:relative;flex:none;transition:background .15s}
+  .tgl .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:left .15s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+  .tgl[aria-pressed="true"]{border-color:var(--ember);color:var(--ink)}
+  .tgl[aria-pressed="true"] .sw{background:var(--ember)}
+  .tgl[aria-pressed="true"] .sw::after{left:15px}
+  .place-row{display:flex;flex-wrap:wrap;gap:8px}
+  .place-chip{border:1.5px solid var(--line2);background:var(--surface);border-radius:10px;padding:8px 14px;font-size:14px;font-weight:600;color:var(--ink2);min-height:40px;display:inline-flex;align-items:center;gap:7px}
+  .place-chip.on{border-color:var(--ink);color:var(--ink);background:var(--chip)}
+  .verdict{margin-top:14px;border-radius:14px;padding:16px;border:1.5px solid;transition:background .2s,border-color .2s}
+  .verdict.safe{background:var(--green-soft);border-color:var(--green)}
+  .verdict.caution{background:var(--amber-soft);border-color:var(--amber)}
+  .verdict.avoid{background:var(--red-soft);border-color:var(--red)}
+  .verdict .v-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .verdict .v-word{font-size:26px;font-weight:700;letter-spacing:.01em;display:flex;align-items:center;gap:9px}
+  .verdict.safe .v-word{color:var(--green)} .verdict.caution .v-word{color:var(--amber)} .verdict.avoid .v-word{color:var(--red)}
+  .verdict .v-place{font-weight:600;font-size:15px}
+  .verdict p{margin-top:8px;font-size:14.5px;color:var(--ink)}
+  .verdict .v-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+  .verdict .v-meta span{background:color-mix(in srgb,var(--surface) 65%,transparent);border:1px solid var(--line2);border-radius:8px;padding:4px 10px;font-size:12.5px;font-weight:600;font-family:"IBM Plex Mono",monospace}
+  .ask-log{margin-top:14px;display:none}
+  .ask-log.show{display:block}
+  .ask-q,.ask-a{border-radius:12px;padding:11px 14px;font-size:14.5px;margin-top:8px}
+  .ask-q{background:var(--chip);color:var(--ink);margin-left:26px}
+  .ask-q::before{content:"You asked · voice  ";display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;color:var(--ink3);margin-bottom:3px}
+  .ask-a{background:var(--surface);border:1px solid var(--line2);margin-right:26px}
+  .ask-a::before{content:"PlumeRoute · spoken + text  ";display:block;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;color:var(--ember-strong);margin-bottom:3px}
+
+  .route-note{display:flex;gap:12px;align-items:flex-start;background:var(--green-soft);border:1.5px solid var(--green);border-radius:var(--radius);padding:15px 17px;margin-top:16px;font-size:14.5px;color:var(--ink)}
+  .route-note svg{flex:none;margin-top:2px;color:var(--green)}
+  .route-note strong{color:var(--ink)}
+
+  /* verdict trio */
+  .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+  .vcard{border-radius:var(--radius);border:1.5px solid;padding:18px;background:var(--surface)}
+  .vcard.safe{border-color:var(--green);background:var(--green-soft)}
+  .vcard.caution{border-color:var(--amber);background:var(--amber-soft)}
+  .vcard.avoid{border-color:var(--red);background:var(--red-soft)}
+  .vcard .w{font-size:21px;font-weight:700;display:flex;gap:8px;align-items:center}
+  .vcard.safe .w{color:var(--green)}.vcard.caution .w{color:var(--amber)}.vcard.avoid .w{color:var(--red)}
+  .vcard p{font-size:14px;margin-top:8px;color:var(--ink)}
+  .vcard .rule{margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink2)}
+
+  /* ---------- phones ---------- */
+  .phones{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:start}
+  .phone{width:min(300px,100%);margin:0 auto;background:#0d1319;border-radius:38px;padding:11px;box-shadow:var(--shadow);border:1px solid var(--line2)}
+  .phone .scr{background:#131c26;border-radius:29px;overflow:hidden;color:#e8eef5;min-height:520px;display:flex;flex-direction:column;position:relative}
+  .phone .notch{width:96px;height:20px;background:#0d1319;border-radius:0 0 12px 12px;margin:0 auto;position:relative;z-index:3}
+  .phone-cap{text-align:center;margin-top:14px}
+  .phone-cap b{display:block;font-size:15.5px}
+  .phone-cap span{font-size:13px;color:var(--ink3)}
+  .mini-appbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px 4px}
+  .mini-map{position:relative;margin:8px 10px;border-radius:16px;overflow:hidden;flex:none}
+  .sheet{margin-top:auto;background:#f4f2ec;color:#171c22;border-radius:20px 20px 0 0;padding:10px 18px 20px}
+  @media (prefers-color-scheme: dark){.sheet{background:#1c232f;color:#eef1f5}}
+  .sheet .grab{width:38px;height:4px;border-radius:99px;background:var(--line2);margin:2px auto 12px}
+  .sheet .vrow{display:flex;align-items:center;gap:10px}
+  .sheet h4{margin:0;font-size:16px}
+  .sheet p{font-size:13.5px;color:var(--ink2);margin-top:6px}
+  .sheet .btnrow{display:flex;gap:8px;margin-top:12px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:10px;border:1.5px solid var(--line2);background:var(--surface);color:var(--ink);font-weight:600;font-size:14px;padding:9px 16px;min-height:42px;text-decoration:none}
+  .btn.primary{background:var(--ember);border-color:var(--ember);color:#fff}
+  .btn.small{padding:6px 12px;min-height:38px;font-size:13px}
+  .btn:active{transform:scale(.98)}
+  .tabbar{display:flex;border-top:1px solid rgba(255,255,255,.1);background:#0d1319}
+  .tabbar div{flex:1;text-align:center;padding:9px 0 12px;font-size:11px;color:#7286a0;font-weight:600}
+  .tabbar div.on{color:#fff}
+  .tabbar svg{display:block;margin:0 auto 3px}
+  .chat{padding:14px;display:flex;flex-direction:column;gap:9px;font-size:13.5px}
+  .bub{border-radius:14px;padding:10px 12px;max-width:88%}
+  .bub.me{align-self:flex-end;background:#24507c;color:#eaf3fb}
+  .bub.bot{align-self:flex-start;background:#1d2938;color:#dbe6f0}
+  .bub.bot b{color:#ffb38a}
+  .wave{display:flex;gap:3px;align-items:center;height:26px;margin:2px 0}
+  .wave i{width:4px;background:var(--ember);border-radius:2px;display:block}
+  .cal-mini{display:grid;grid-template-columns:repeat(14,1fr);gap:3px;padding:4px 14px}
+  .cal-mini i{aspect-ratio:1;border-radius:2.5px;display:block}
+
+  /* ---------- trend ---------- */
+  .trend-loc-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+  .trend-loc-bar .loc-search{flex:1;min-width:180px;display:flex;align-items:center;gap:8px;border:1.5px solid var(--line2);border-radius:10px;padding:0 12px;background:var(--surface);min-height:42px}
+  .trend-loc-bar .loc-search input{flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:14px;color:var(--ink);min-height:40px}
+  .loc-chip{border:1.5px solid var(--line2);background:var(--surface);border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:700;color:var(--ink2);min-height:40px;display:inline-flex;align-items:center;gap:7px}
+  .loc-chip.on{border-color:var(--ink);background:var(--ink);color:var(--bg)}
+  .loc-chip .dotpin{width:8px;height:8px;border-radius:50%;background:var(--ember);flex:none}
+  .loc-chip.on .dotpin{background:#ffb38a}
+  .trend-mapwrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line2);background:var(--map-bg);margin-bottom:8px}
+  .trend-mapwrap svg{display:block;width:100%;height:auto}
+  .trend-map-meta{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin-bottom:18px;font-size:13.5px}
+  .trend-map-meta b{color:var(--ink)}
+  .trend-map-meta .mono{font-size:12px;color:var(--ink3)}
+  .aoi-pulse{animation:aoiPulse 2.6s ease-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes aoiPulse{0%{opacity:.55}50%{opacity:.12}100%{opacity:.55}}
+  @media (prefers-reduced-motion: reduce){.aoi-pulse{animation:none}}
+  .trend-grid{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+  .panel h3{margin-bottom:4px}
+  .panel .sub{font-size:13.5px;color:var(--ink3);margin-bottom:14px}
+  .year-row{display:flex;gap:8px;flex-wrap:wrap}
+  .year-btn{border:1.5px solid var(--line2);background:var(--surface);border-radius:9px;padding:7px 16px;font-weight:600;font-size:14px;color:var(--ink2);min-height:40px}
+  .year-btn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .cal-scroll{overflow-x:auto;padding-bottom:6px}
+  .cal{display:grid;grid-template-rows:repeat(7,13px);grid-auto-flow:column;gap:3px;min-width:640px}
+  .cal i{width:13px;height:13px;border-radius:3px;display:block}
+  .cal-months{display:flex;gap:0;min-width:640px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink3);margin-bottom:6px}
+  .cal-legend{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink3);margin-top:10px}
+  .cal-legend i{width:12px;height:12px;border-radius:3px;display:block}
+  .trend-banner{margin-top:16px;border-radius:12px;padding:14px 16px;background:var(--red-soft);border:1.5px solid var(--red);display:flex;gap:12px;align-items:flex-start}
+  .trend-banner.ok{background:var(--green-soft);border-color:var(--green)}
+  .trend-banner b{font-size:16px}
+  .trend-banner p{font-size:14px;color:var(--ink)}
+  .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .statgrid .stat b{font-size:22px}
+  .harm{margin-top:14px}
+  .harm-row{display:grid;grid-template-columns:86px 1fr 52px;gap:10px;align-items:center;font-size:13px;margin-top:9px}
+  .harm-row .bar{height:16px;border-radius:5px;background:var(--chip);position:relative;overflow:hidden}
+  .harm-row .bar i{position:absolute;inset:0 auto 0 0;border-radius:5px;display:block}
+  .harm-row b{font-family:"IBM Plex Mono",monospace;text-align:right;font-size:13px}
+  .note{font-size:13px;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin-top:14px}
+
+  /* ---------- design system ---------- */
+  .ds-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .swatch{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+  .swatch .chipc{height:56px}
+  .swatch .meta{padding:10px 12px}
+  .swatch .meta b{font-size:13.5px;display:block}
+  .swatch .meta span{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink3)}
+  .swatch .meta p{font-size:12px;color:var(--ink2);margin-top:3px}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  .type-row{display:flex;align-items:baseline;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+  .type-row:last-child{border-bottom:0}
+  .type-row .tk{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink3);width:118px;flex:none}
+  .comp-list{display:flex;flex-direction:column;gap:14px}
+  .comp{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  .comp .lbl{width:100%;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+  .ghost-btn{border:1.5px solid var(--line2);background:transparent;color:var(--ink);border-radius:10px;padding:9px 16px;font-weight:600;font-size:14px;min-height:42px}
+  .kbd-chip{display:inline-flex;border:1px solid var(--line2);background:var(--chip);border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600;min-height:36px;align-items:center}
+  .toast{display:inline-flex;gap:8px;align-items:center;background:#0d1319;color:#f5d9a8;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:600}
+  .a11y{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .a11y .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .a11y .card b{display:block;margin-bottom:5px;font-size:15px}
+  .a11y .card p{font-size:13.5px;color:var(--ink2)}
+
+  /* ---------- flows ---------- */
+  .flowbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-bottom:18px;overflow-x:auto}
+  .flowbox h3{display:flex;align-items:center;gap:10px}
+  .flowbox h3 .n{width:28px;height:28px;border-radius:9px;background:var(--ember);color:#fff;display:grid;place-items:center;font-size:14px;flex:none}
+  .flowbox .sub{color:var(--ink3);font-size:13.5px;margin:5px 0 18px}
+  .flow{display:flex;align-items:stretch;gap:0;min-width:860px}
+  .fnode{background:var(--surface2);border:1.5px solid var(--line2);border-radius:12px;padding:11px 13px;min-width:128px;max-width:168px;display:flex;flex-direction:column;justify-content:center}
+  .fnode b{font-size:13.5px;line-height:1.3}
+  .fnode span{font-size:11.5px;color:var(--ink3);margin-top:3px;line-height:1.35}
+  .fnode.start{border-color:var(--ember);background:var(--ember-soft)}
+  .fnode.end{border-color:var(--green);background:var(--green-soft)}
+  .fnode.decision{border-color:var(--amber);background:var(--amber-soft);border-radius:12px}
+  .fnode.model{border-color:var(--blue);background:var(--blue-soft)}
+  .farr{display:flex;align-items:center;justify-content:center;padding:0 3px;color:var(--ink3);flex:none}
+  .farr svg{display:block}
+  .fbranch{display:flex;flex-direction:column;gap:8px;justify-content:center}
+  .codeblock{position:relative;background:#0d1319;border-radius:12px;margin-top:16px}
+  .codeblock pre{margin:0;padding:16px 18px;overflow-x:auto;color:#c9d8e6;font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.6}
+  .copy-btn{position:absolute;top:10px;right:10px;background:#1d2938;color:#dbe6f0;border:1px solid #33465e;border-radius:8px;font-size:12.5px;font-weight:600;padding:6px 12px;min-height:36px}
+  .copy-btn.done{background:var(--green);border-color:var(--green);color:#fff}
+  .pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;min-width:860px}
+  .pipe .col h5{margin:0 0 10px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+  .pipe .stack{display:flex;flex-direction:column;gap:8px}
+  .pipe .fnode{max-width:none;min-width:0}
+  .guard{margin-top:14px;border:1.5px dashed var(--amber);background:var(--amber-soft);border-radius:12px;padding:12px 15px;font-size:14px;min-width:0}
+
+  /* ---------- meta workflow ---------- */
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .tool-card{border-radius:var(--radius);border:1px solid var(--line);background:var(--surface);padding:22px;box-shadow:var(--shadow)}
+  .tool-card .t-head{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .tool-card .t-ico{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none}
+  .tool-card h3{font-size:20px}
+  .tool-card .role{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase}
+  .tool-card ul{margin:12px 0 0;padding-left:19px;font-size:14.5px;color:var(--ink2)}
+  .tool-card li{margin-top:5px}
+  .tool-card li b{color:var(--ink)}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:18px}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px;position:relative}
+  .step .n{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ember-strong);font-weight:600;letter-spacing:.1em}
+  .step b{display:block;margin:6px 0 4px;font-size:14.5px}
+  .step p{font-size:12.5px;color:var(--ink2)}
+  .prompts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  .prompt-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;position:relative}
+  .prompt-card h4{margin:0 0 8px;font-size:15px;padding-right:86px}
+  .prompt-card .pbody{font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.65;color:var(--ink2);background:var(--surface2);border:1px solid var(--line);border-radius:9px;padding:11px 13px}
+  .prompt-card .copy-btn{position:static;margin-top:10px;background:var(--chip);color:var(--ink);border-color:var(--line2)}
+
+  /* ---------- build order ---------- */
+  .timeline{border-left:3px solid var(--line2);margin-left:8px;padding-left:26px;display:flex;flex-direction:column;gap:22px}
+  .tl-item{position:relative}
+  .tl-item::before{content:"";position:absolute;left:-35px;top:4px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:3.5px solid var(--ember)}
+  .tl-item .when{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;color:var(--ember-strong);letter-spacing:.06em}
+  .tl-item h3{margin:3px 0 5px}
+  .tl-item p{color:var(--ink2);font-size:14.5px;max-width:720px}
+  .tl-item .screens{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .deadline{background:var(--red-soft);border:1.5px solid var(--red);border-radius:var(--radius);padding:18px 20px;display:flex;gap:14px;align-items:flex-start;margin-top:26px}
+  .deadline b{font-size:17px;color:var(--red)}
+  .deadline p{font-size:14.5px;margin-top:3px}
+  .limits{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .limits .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .limits .card b{display:block;font-size:15px;margin-bottom:4px}
+  .limits .card p{font-size:13.5px;color:var(--ink2)}
+  footer{margin-top:64px;border-top:1px solid var(--line);padding:26px 0 44px;color:var(--ink3);font-size:13.5px}
+  footer .cols{display:flex;flex-wrap:wrap;gap:8px 34px}
+  footer b{color:var(--ink2)}
+
+  .fire-pulse{animation:pulse 2.2s ease-out infinite;transform-origin:center;transform-box:fill-box}
+  @keyframes pulse{0%{transform:scale(.6);opacity:.9}70%{transform:scale(2.1);opacity:0}100%{opacity:0}}
+  @media (prefers-reduced-motion: reduce){
+    .fire-pulse{animation:none;opacity:0}
+    html{scroll-behavior:auto}
+  }
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr 1fr}
+    .console{grid-template-columns:1fr}
+    .console-left{border-right:0;border-bottom:1px solid var(--line)}
+    .trend-grid,.two-col,.vs{grid-template-columns:1fr}
+    .phones{grid-template-columns:1fr}
+    .steps{grid-template-columns:1fr 1fr}
+    .ds-grid{grid-template-columns:1fr 1fr}
+    .a11y,.limits,.trio{grid-template-columns:1fr}
+    .prompts{grid-template-columns:1fr}
+    .map-legend{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <span class="pill hot">NASA Space Apps · Boston (virtual)</span>
+      <span class="pill">Challenge: Harmonization of MODIS &amp; VIIRS Hot Spots</span>
+      <span class="pill"><span class="dot"></span> Design freeze — build starts Sat Nov 14, 1:00 PM ET</span>
+    </div>
+    <h1>PlumeRoute <span class="accent">UI Mockup &amp; Flow</span></h1>
+    <p class="lede">See the smoke, know where it's going, and take the safe way around. This is the complete design package for Saturday's build: <strong>clickable-feel mockups of the Trend view and Live map, the verdict system, a full design system, and the three flow diagrams</strong> — user journey, data pipeline, and screen navigation — plus the Meta prompts that produced them.</p>
+    <div class="hero-grid">
+      <div class="stat"><b>2 modes</b><span>Trend history · Live smoke map</span></div>
+      <div class="stat"><b>5 screens</b><span>Trend, live, place sheet, route (Live only), voice</span></div>
+      <div class="stat"><b>3 verdicts</b><span>AVOID · CAUTION · SAFE — always with a reason</span></div>
+      <div class="stat"><b>1–6 h</b><span>Trajectory forecast on 850 hPa winds</span></div>
+    </div>
+    <div class="hero-note">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16.5v.5"/></svg>
+      <p><strong>How to read this page:</strong> everything inside a device or browser frame is the product mockup, marked <span class="sample-tag">SAMPLE DATA</span> — plume areas, arrival times, and chart values are layout placeholders. In the real build every number is computed from FIRMS / GIBS data, and the trend verdict is computed in code, never claimed by the model. Numbers outside the frames are the real plan.</p>
+    </div>
+  </div>
+</header>
+
+<nav class="subnav" aria-label="Page sections">
+  <div class="wrap"><div class="subnav-in" id="subnav">
+    <a href="#trend" class="active">Trend mockup</a>
+    <a href="#live">Live mockup</a>
+    <a href="#mobile">Mobile</a>
+    <a href="#system">Design system</a>
+    <a href="#flows">Flow diagrams</a>
+    <a href="#meta">Meta workflow</a>
+    <a href="#build">Build order</a>
+  </div></div>
+</nav>
+
+<main class="wrap">
+
+<!-- ================= TREND MOCKUP ================= -->
+<section id="trend">
+  <div class="sec-head">
+    <span class="sec-tag">Screen 01 · Trend — location-based</span>
+    <h2>Trend view — start on the map, then ask "is this normal?" for that place</h2>
+    <p>Trend is not one county for everyone. Pick an area of interest on the map — or tap a place, search, or follow the location you were viewing in Live — and the calendar, year-over-year chart, stats, and verdict all rebuild for <strong>that location only</strong>. The brief asks for a burning-activity calendar over a harmonized MODIS + VIIRS archive for a selected area: VIIRS detects roughly 3× as many hot spots per fire as MODIS, so raw counts would fake a modern "increase." The pipeline normalizes first — then a significance test, computed in code, delivers the verdict for the chosen place. <strong>Trend is history only</strong> — no live plume, no forecast cone, and no smoke-aware route on this screen; routing is a Live-mode decision and appears only in Live.</p>
+  </div>
+
+  <div class="frame" style="margin-bottom:18px">
+    <div class="frame-bar">
+      <div class="dots"><i></i><i></i><i></i></div>
+      <div class="url" id="trend-frame-url">plumeroute.app/trend?area=lincoln-county</div>
+      <span class="sample-tag">SAMPLE DATA</span>
+    </div>
+    <div style="padding:20px">
+      <!-- Location picker + trend map -->
+      <div class="ctl-label">1 · Area of interest — tap the map or pick a location <output id="trend-area-out">Lincoln County</output></div>
+      <div class="trend-loc-bar" id="trend-loc-row">
+        <button class="loc-chip on" type="button" data-trend-loc="lincoln"><span class="dotpin"></span>Lincoln County</button>
+        <button class="loc-chip" type="button" data-trend-loc="cedar"><span class="dotpin"></span>Cedar Ridge</button>
+        <button class="loc-chip" type="button" data-trend-loc="millcreek"><span class="dotpin"></span>Mill Creek</button>
+        <button class="loc-chip" type="button" data-trend-loc="fairview"><span class="dotpin"></span>Fairview / Downtown</button>
+        <label class="loc-search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="trend-search" type="text" placeholder="Search a place — try &quot;cedar&quot; or &quot;mill&quot;" aria-label="Search trend location" />
+        </label>
+        <button class="btn small" type="button" id="trend-follow-live">◎ Follow Live location</button>
+      </div>
+
+      <div class="trend-mapwrap">
+        <svg id="trend-map" viewBox="0 0 720 280" role="img" aria-label="Trend map: pick an area of interest to see its fire history. Hot spots and the selected area change by location.">
+          <rect width="720" height="280" fill="#16212d"/>
+          <path d="M0 48 C110 30 210 62 340 44 C480 24 590 56 720 34 L720 0 L0 0 Z" fill="#1b2836"/>
+          <path d="M0 280 L0 208 C130 228 240 192 380 218 C520 244 620 214 720 236 L720 280 Z" fill="#1b2836"/>
+          <path d="M72 280 C118 198 92 142 152 92 C186 62 182 28 214 0" stroke="#274b63" stroke-width="9" fill="none" opacity=".65" stroke-linecap="round"/>
+          <g stroke="#2c3d4f" stroke-width="3.2" fill="none" opacity=".85">
+            <path d="M36 246 L252 178 L456 138 L690 96"/>
+            <path d="M142 278 L214 162 L282 62 L336 4"/>
+            <path d="M52 102 L312 124 L540 112 L700 124"/>
+          </g>
+          <g stroke="#3a4f68" stroke-width="1.6" fill="none" opacity=".7">
+            <path d="M84 224 L336 192 L590 158"/><path d="M288 270 L330 158 L382 58"/>
+          </g>
+          <!-- heat density blobs (repositioned per location in JS via opacity) -->
+          <ellipse id="heat-cedar" cx="190" cy="92" rx="86" ry="42" fill="#c96a1e" opacity=".28"/>
+          <ellipse id="heat-lincoln" cx="398" cy="128" rx="104" ry="48" fill="#c96a1e" opacity=".38"/>
+          <ellipse id="heat-fairview" cx="596" cy="108" rx="72" ry="36" fill="#c96a1e" opacity=".18"/>
+          <ellipse id="heat-mill" cx="150" cy="218" rx="70" ry="32" fill="#c96a1e" opacity=".10"/>
+          <!-- AOI ring -->
+          <g id="trend-aoi-g">
+            <circle id="trend-aoi-fill" class="aoi-pulse" cx="398" cy="128" r="62" fill="#f4822a" opacity=".22"/>
+            <circle id="trend-aoi" cx="398" cy="128" r="62" fill="none" stroke="#ffb38a" stroke-width="2.2" stroke-dasharray="8 5"/>
+            <circle id="trend-aoi-center" cx="398" cy="128" r="6" fill="#fff" stroke="#d9510d" stroke-width="3"/>
+          </g>
+          <!-- historical hot spots for selected AOI (built in JS) -->
+          <g id="trend-hotspots"></g>
+          <!-- clickable places -->
+          <g font-family="IBM Plex Sans,sans-serif" font-size="12.5" font-weight="700" fill="#eef3f8">
+            <g class="trend-place" data-trend-loc="cedar" style="cursor:pointer"><circle cx="190" cy="92" r="10" fill="#16212d" stroke="#fff" stroke-width="2"/><text x="190" y="96" text-anchor="middle" font-size="10">C</text><text x="206" y="88">Cedar Ridge</text><text x="206" y="103" font-size="10.5" fill="#9fb2c3" font-weight="500">ridge · high fire days</text></g>
+            <g class="trend-place" data-trend-loc="lincoln" style="cursor:pointer"><circle cx="398" cy="128" r="10" fill="#16212d" stroke="#fff" stroke-width="2"/><text x="398" y="132" text-anchor="middle" font-size="10">L</text><text x="414" y="124">Lincoln County</text><text x="414" y="139" font-size="10.5" fill="#9fb2c3" font-weight="500">school &amp; valley · default AOI</text></g>
+            <g class="trend-place" data-trend-loc="fairview" style="cursor:pointer"><circle cx="596" cy="108" r="10" fill="#16212d" stroke="#fff" stroke-width="2"/><text x="596" y="112" text-anchor="middle" font-size="10">F</text><text x="560" y="86">Fairview / Downtown</text><text x="560" y="100" font-size="10.5" fill="#9fb2c3" font-weight="500">urban edge · later peak</text></g>
+            <g class="trend-place" data-trend-loc="millcreek" style="cursor:pointer"><circle cx="150" cy="218" r="10" fill="#16212d" stroke="#fff" stroke-width="2"/><text x="150" y="222" text-anchor="middle" font-size="10">M</text><text x="166" y="214">Mill Creek</text><text x="166" y="229" font-size="10.5" fill="#9fb2c3" font-weight="500">river · wetter · fewer fires</text></g>
+          </g>
+          <g font-family="IBM Plex Mono,monospace" font-size="10.5" fill="#ffd9bd"><rect x="12" y="12" width="468" height="22" rx="6" fill="rgba(10,15,21,.85)"/><text x="20" y="27" id="trend-map-chip">HISTORY MAP · LINCOLN COUNTY · 2000—TODAY · HISTORY ONLY</text></g>
+        </svg>
+        <div class="map-legend">
+          <div><i style="background:#ff5a1f"></i> Historical hot spot (harmonized)</div>
+          <div><i style="background:#f4822a;opacity:.35"></i> Selected area of interest</div>
+          <div><i style="background:#c96a1e;opacity:.45"></i> Fire-density heat</div>
+        </div>
+      </div>
+      <div class="trend-map-meta" id="trend-loc-meta">
+        <span>Showing history for <b id="trend-area-name">Lincoln County</b> — <span id="trend-area-desc">valley + school area from the Live map. All charts below use only hot spots inside this ring.</span></span>
+        <span class="mono" id="trend-area-coords">AOI 25 km radius · 39.12°N, −77.24°W</span>
+        <span class="mono" style="color:var(--amber)">HISTORY ONLY · AREA + PAST FIRES · NO LIVE ROUTE — ROUTING IS IN LIVE MODE</span>
+      </div>
+
+      <div class="ctl-label" style="margin-bottom:12px">2 · Trends for this location — calendar, chart &amp; verdict update together</div>
+      <div class="trend-grid">
+        <div>
+          <div class="ctl-label">Burning-activity calendar — fire days for <span id="cal-loc-label" style="color:var(--ink)">Lincoln County</span> <output id="cal-year-out">2026 season</output></div>
+          <div class="cal-months" aria-hidden="true"><span style="flex:4.4">Jan</span><span style="flex:4">Feb</span><span style="flex:4.4">Mar</span><span style="flex:4.2">Apr</span><span style="flex:4.4">May</span><span style="flex:4.2">Jun</span><span style="flex:4.4">Jul</span><span style="flex:4.4">Aug</span><span style="flex:4.2">Sep</span><span style="flex:4.4">Oct</span><span style="flex:4.2">Nov</span><span style="flex:4">Dec</span></div>
+          <div class="cal-scroll"><div class="cal" id="cal-main" role="img" aria-label="Calendar heatmap: one cell per day, darker ember means more fire detections that day"></div></div>
+          <div class="cal-legend">Less <i style="background:#ece7db"></i><i style="background:#f6cf9a"></i><i style="background:#f09a4e"></i><i style="background:#e05f10"></i><i style="background:#93330a"></i> More fire activity</div>
+          <div class="trend-banner" id="trend-banner">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:2px;color:var(--red)" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+            <div>
+              <b id="tb-title">2026 is significantly above the 10-year average</b>
+              <p id="tb-body">Fire days run <strong>41% above</strong> the 2016–2025 average for Lincoln County (two-sample test, <span class="mono">p = 0.03</span>). The verdict is computed in code from harmonized detections — the model only phrases it.</p>
+            </div>
+          </div>
+          <div style="margin-top:18px">
+            <div class="ctl-label">Detections by month — <span id="chart-loc-label">Lincoln County</span> · selected year vs its 10-year average</div>
+            <svg id="yoy-chart" viewBox="0 0 720 240" style="width:100%;height:auto" role="img" aria-label="Bar chart comparing monthly fire detections for the selected year against the ten year average">
+              <line x1="40" y1="200" x2="700" y2="200" stroke="var(--line2)" stroke-width="1.5"/>
+              <g id="yoy-bars"></g>
+              <path id="yoy-avg" fill="none" stroke="var(--blue)" stroke-width="2.6" stroke-dasharray="6 5"/>
+              <g id="yoy-labels" font-family="IBM Plex Mono,monospace" font-size="11" fill="var(--ink3)" text-anchor="middle"></g>
+            </svg>
+            <div style="display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--ink2)">
+              <span style="display:flex;gap:7px;align-items:center"><i style="width:13px;height:13px;border-radius:3px;background:var(--ember);display:block"></i><span id="yoy-legend-year">2026 detections (harmonized)</span></span>
+              <span style="display:flex;gap:7px;align-items:center"><i style="width:16px;height:0;border-top:3px dashed var(--blue);display:block"></i>10-year average</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="ctl-label">Season</div>
+          <div class="year-row" id="year-row">
+            <button class="year-btn" type="button" data-year="2024">2024</button>
+            <button class="year-btn" type="button" data-year="2025">2025</button>
+            <button class="year-btn on" type="button" data-year="2026">2026</button>
+          </div>
+          <div class="statgrid" style="margin-top:16px">
+            <div class="stat"><b id="st-firedays">96</b><span>fire days · <span class="stat-loc">Lincoln County</span></span></div>
+            <div class="stat"><b id="st-detections">1,284</b><span>detections (harmonized)</span></div>
+            <div class="stat"><b id="st-peak">August</b><span>peak month</span></div>
+            <div class="stat"><b id="st-streak">11 days</b><span>longest active streak</span></div>
+          </div>
+          <button class="btn" type="button" id="trend-csv-btn" style="width:100%;margin-top:12px">↓ Download hot spots CSV — <span id="csv-loc-label">Lincoln County</span></button>
+          <p style="font-size:12px;color:var(--ink3);margin-top:7px">CSV is scoped to the map AOI above and the selected season — changing location changes the file.</p>
+          <div class="panel harm" style="box-shadow:none">
+            <h3 style="font-size:16px">Why "harmonized" matters</h3>
+            <p class="sub" style="margin-bottom:4px">Same fire, raw counts by sensor — before correction, the archive lies.</p>
+            <div class="harm-row"><span>MODIS raw</span><div class="bar"><i style="width:33%;background:#7fb3d9"></i></div><b>104</b></div>
+            <div class="harm-row"><span>VIIRS raw</span><div class="bar"><i style="width:100%;background:#e8a04c"></i></div><b>312</b></div>
+            <div class="harm-row"><span>Harmonized</span><div class="bar"><i style="width:36%;background:var(--green)"></i></div><b>~112</b></div>
+            <p class="note">VIIRS sees ~3× more hot spots per fire than MODIS. Without the normalization factor, any year-over-year chart "proves" fires tripled when the satellite changed. This correction is the challenge — and the validity story for the judges.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LIVE MOCKUP ================= -->
+<section id="live">
+  <div class="sec-head">
+    <span class="sec-tag">Screen 02 · Live</span>
+    <h2>The live smoke map — the first 30 seconds of the demo</h2>
+    <p>FIRMS fire detections and GIBS satellite imagery on a Google Map. SAM 3.1 measures the plume; the cone pushes it forward on 850&nbsp;hPa winds. The smoke-aware route is switched on below: it leaves heading <strong>northwest</strong> and stays <strong>north of the plume and the forecast cone</strong> — around the smoke, never through it. Drag the time slider, tap a place, flip the layers — this mockup behaves the way the real screen will.</p>
+  </div>
+
+  <div class="frame">
+    <div class="frame-bar">
+      <div class="dots"><i></i><i></i><i></i></div>
+      <div class="url">plumeroute.app/live</div>
+      <span class="sample-tag">SAMPLE DATA</span>
+    </div>
+    <div class="appbar">
+      <div class="brand">
+        <span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M4 19c4-1 5-4 5-7V4c4 2 6 5 6 9 2-1 3-2 4-4 1 5-1 10-6 11H6"/></svg></span>
+        PlumeRoute
+      </div>
+      <div class="mode-switch" role="group" aria-label="Mode">
+        <button class="on" id="mode-trend" type="button">Trend</button>
+        <button id="mode-live" type="button">Live</button>
+      </div>
+      <label class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="search-input" type="text" placeholder="Search a place — try &quot;school&quot;" aria-label="Search a place" />
+      </label>
+      <button class="voice-btn" id="voice-demo" type="button">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+        Ask by voice
+      </button>
+      <span class="freshness">FIRMS · ~3 h old</span>
+    </div>
+
+    <div class="mapwrap">
+      <svg viewBox="0 0 1200 600" role="img" aria-label="Mock map: wildfire near Cedar Ridge, smoke plume drifting northeast over Lincoln Heights">
+        <defs>
+          <radialGradient id="aod1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#c96a1e" stop-opacity=".55"/><stop offset="60%" stop-color="#a34d12" stop-opacity=".28"/><stop offset="100%" stop-color="#a34d12" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="aod2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#8a5a20" stop-opacity=".4"/><stop offset="100%" stop-color="#8a5a20" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="14"/></filter>
+        </defs>
+        <rect width="1200" height="600" fill="#16212d"/>
+        <path d="M0 96 C180 60 320 130 520 92 C760 46 940 110 1200 70 L1200 0 L0 0 Z" fill="#1b2836"/>
+        <path d="M0 600 L0 430 C220 470 380 400 620 452 C860 505 1020 450 1200 492 L1200 600 Z" fill="#1b2836"/>
+        <path d="M120 600 C200 420 150 300 260 190 C330 118 320 60 380 0" stroke="#274b63" stroke-width="15" fill="none" opacity=".65" stroke-linecap="round"/>
+        <g stroke="#2c3d4f" stroke-width="5" fill="none" opacity=".8">
+          <path d="M60 520 L420 380 L760 300 L1140 210"/>
+          <path d="M240 590 L360 340 L470 130 L560 10"/>
+          <path d="M90 210 L520 260 L900 235 L1160 260"/>
+          <path d="M700 590 L760 300 L820 90"/>
+        </g>
+        <g stroke="#3a4f68" stroke-width="2.4" fill="none" opacity=".7">
+          <path d="M140 470 L560 400 L980 330"/>
+          <path d="M480 560 L560 330 L640 120"/>
+          <path d="M180 120 L700 170 L1120 130"/>
+        </g>
+        <g font-family="IBM Plex Sans,sans-serif" font-size="15" fill="#7e93a8" font-weight="600">
+          <text x="96" y="556">Mill Creek</text>
+          <text x="196" y="180">Cedar Ridge</text>
+          <text x="60" y="330">Route 9</text>
+          <text x="1052" y="560">Fairview</text>
+        </g>
+
+        <!-- true-color cloud wisps -->
+        <g id="layer-truecolor">
+          <ellipse cx="300" cy="150" rx="150" ry="30" fill="#dfe9f2" opacity=".10" filter="url(#soft)"/>
+          <ellipse cx="880" cy="500" rx="190" ry="36" fill="#dfe9f2" opacity=".08" filter="url(#soft)"/>
+          <ellipse cx="1060" cy="90" rx="130" ry="24" fill="#dfe9f2" opacity=".09" filter="url(#soft)"/>
+        </g>
+
+        <!-- AOD smoke haze -->
+        <g id="layer-aod">
+          <ellipse cx="620" cy="265" rx="330" ry="130" fill="url(#aod1)" filter="url(#soft)"/>
+          <ellipse cx="900" cy="180" rx="270" ry="100" fill="url(#aod2)" filter="url(#soft)"/>
+        </g>
+
+        <!-- trajectory cone segments (revealed by slider) -->
+        <g id="cone">
+          <polygon class="cone-seg" data-h="1" points="520,268 640,232 636,268 516,300" fill="#f4822a" opacity=".42"/>
+          <polygon class="cone-seg" data-h="2" points="640,232 760,196 752,240 636,268" fill="#f4822a" opacity=".36"/>
+          <polygon class="cone-seg" data-h="3" points="760,196 878,160 864,214 752,240" fill="#f4822a" opacity=".30"/>
+          <polygon class="cone-seg" data-h="4" points="878,160 992,126 970,190 864,214" fill="#f4822a" opacity=".24"/>
+          <polygon class="cone-seg" data-h="5" points="992,126 1096,94 1064,166 970,190" fill="#f4822a" opacity=".18"/>
+          <polygon class="cone-seg" data-h="6" points="1096,94 1180,66 1140,142 1064,166" fill="#f4822a" opacity=".13"/>
+        </g>
+
+        <!-- SAM plume (measured, now) -->
+        <g id="layer-plume">
+          <path d="M428 322 C470 285 545 262 622 244 C660 236 668 258 640 272 C580 300 500 322 452 338 C428 345 416 336 428 322 Z" fill="#ff7a1a" opacity=".5"/>
+          <path d="M428 322 C470 285 545 262 622 244 C660 236 668 258 640 272 C580 300 500 322 452 338 C428 345 416 336 428 322 Z" fill="none" stroke="#ffb38a" stroke-width="2" stroke-dasharray="7 5"/>
+          <g font-family="IBM Plex Mono,monospace" font-size="12.5" fill="#ffd9bd">
+            <rect x="470" y="196" width="238" height="24" rx="6" fill="rgba(10,15,21,.82)"/>
+            <text x="480" y="212">SAM 3.1 plume · 42 km² · measured</text>
+          </g>
+        </g>
+
+        <!-- routes: usual = straight through the plume (flagged); smoke-aware = northern arc.
+             The arc's northern corridor was checked point-by-point against the plume polygon,
+             every cone segment and the AOD core ellipse — it clears all of them. It leaves
+             Mill Creek heading northwest, matching the verdict's safer direction. -->
+        <path id="route-direct" d="M318 486 C520 420 760 320 1012 168" fill="none" stroke="#ff6a55" stroke-width="4.5" stroke-dasharray="11 8" stroke-linecap="round" style="opacity:.38"/>
+        <path id="route-safe" d="M318 486 C252 452 214 388 221 308 C227 228 285 144 389 103 C493 62 642 46 793 56 C893 63 969 79 997 113 C1007 125 1011 138 1012 152" fill="none" stroke="#43d68a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <g id="route-start" font-family="IBM Plex Mono,monospace" font-size="11.5">
+          <rect x="140" y="514" width="276" height="24" rx="6" fill="rgba(10,15,21,.85)"/>
+          <text x="150" y="530" fill="#a9ecc9">○ start: outside the plume · head NW first</text>
+        </g>
+        <g id="route-labels" font-family="IBM Plex Mono,monospace" font-size="12">
+          <g id="lbl-direct"><rect x="600" y="352" width="212" height="24" rx="6" fill="rgba(10,15,21,.85)"/><text x="610" y="368" fill="#ffb3a6">usual route · through smoke · 38 min</text></g>
+          <g id="lbl-safe"><rect x="584" y="84" width="222" height="24" rx="6" fill="rgba(10,15,21,.85)"/><text x="594" y="100" fill="#a9ecc9">smoke-aware route · clear · 47 min</text></g>
+        </g>
+
+        <!-- FIRMS fire detections -->
+        <g id="layer-fires">
+          <g transform="translate(430,330)">
+            <circle class="fire-pulse" r="15" fill="#ff5a1f"/>
+            <circle r="10" fill="#ff5a1f" stroke="#ffd9bd" stroke-width="2"/>
+            <text y="4.5" text-anchor="middle" font-size="11" fill="#fff" font-weight="700">▲</text>
+          </g>
+          <circle cx="402" cy="352" r="6.5" fill="#ff7a1a" stroke="#ffd9bd" stroke-width="1.6"/>
+          <circle cx="458" cy="308" r="5.5" fill="#ff7a1a" stroke="#ffd9bd" stroke-width="1.6"/>
+          <g font-family="IBM Plex Mono,monospace" font-size="12" fill="#ffd9bd">
+            <rect x="352" y="368" width="196" height="24" rx="6" fill="rgba(10,15,21,.82)"/>
+            <text x="362" y="384">FIRMS · VIIRS + MODIS · FRP 84 MW</text>
+          </g>
+        </g>
+
+        <!-- places -->
+        <g font-family="IBM Plex Sans,sans-serif" font-size="14" font-weight="600" fill="#eef3f8">
+          <g class="place-dot" data-place="school" style="cursor:pointer">
+            <circle cx="712" cy="222" r="11" fill="#16212d" stroke="#fff" stroke-width="2.4"/><text x="712" y="227" text-anchor="middle" font-size="11">S</text>
+            <text x="730" y="218">Lincoln Heights</text><text x="730" y="236" font-size="11.5" fill="#9fb2c3" font-weight="500">school · 2,400 people</text>
+          </g>
+          <g class="place-dot" data-place="downtown" style="cursor:pointer">
+            <circle cx="1012" cy="152" r="11" fill="#16212d" stroke="#fff" stroke-width="2.4"/><text x="1012" y="157" text-anchor="middle" font-size="11">D</text>
+            <text x="1030" y="148">Downtown</text><text x="1030" y="166" font-size="11.5" fill="#9fb2c3" font-weight="500">18,000 people</text>
+          </g>
+          <g class="place-dot" data-place="home" style="cursor:pointer">
+            <circle cx="318" cy="486" r="11" fill="#16212d" stroke="#fff" stroke-width="2.4"/><text x="318" y="491" text-anchor="middle" font-size="11">H</text>
+            <text x="336" y="482">Your home</text><text x="336" y="500" font-size="11.5" fill="#9fb2c3" font-weight="500">Mill Creek</text>
+          </g>
+          <g class="place-dot" data-place="highway" style="cursor:pointer">
+            <circle cx="880" cy="300" r="11" fill="#16212d" stroke="#fff" stroke-width="2.4"/><text x="880" y="305" text-anchor="middle" font-size="11">R</text>
+            <text x="898" y="296">Route 9 junction</text><text x="898" y="314" font-size="11.5" fill="#9fb2c3" font-weight="500">commute route</text>
+          </g>
+        </g>
+      </svg>
+      <div class="wind-chip">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffb38a" stroke-width="2.2" stroke-linecap="round"><path d="M4 20 20 4M11 4h9v9"/></svg>
+        850 hPa wind · NE · 28 km/h
+      </div>
+      <div class="map-legend">
+        <div><i style="background:#ff5a1f"></i> FIRMS detection</div>
+        <div><i style="background:#ff7a1a;opacity:.55"></i> SAM plume (now)</div>
+        <div><i style="background:#f4822a;opacity:.3"></i> Forecast cone (+1–6 h)</div>
+        <div><i style="background:#c96a1e;opacity:.45"></i> GIBS aerosol (AOD)</div>
+      </div>
+    </div>
+
+    <div class="console">
+      <div class="console-left">
+        <div class="ctl-label">Trajectory forecast — time slider <output id="slider-out">+3 h</output></div>
+        <input type="range" id="time-slider" min="0" max="6" step="1" value="3" aria-label="Forecast hour" />
+        <div class="ticks"><span>Now</span><span>+1 h</span><span>+2 h</span><span>+3 h</span><span>+4 h</span><span>+5 h</span><span>+6 h</span></div>
+        <div class="eta-line" id="eta-line">At <b>+3 h</b>, the cone covers <b>Lincoln Heights</b> and reaches the <b>Route 9 junction</b>. Downtown is still clear — smoke arrives around <b>+5 h</b>.</div>
+        <div class="ctl-label" style="margin-top:20px">Layers</div>
+        <div class="toggle-row" style="margin-top:0">
+          <button class="tgl" type="button" data-layer="layer-fires" aria-pressed="true"><span class="sw"></span>FIRMS fires</button>
+          <button class="tgl" type="button" data-layer="layer-plume" aria-pressed="true"><span class="sw"></span>SAM plume</button>
+          <button class="tgl" type="button" data-layer="layer-aod" aria-pressed="true"><span class="sw"></span>GIBS AOD</button>
+          <button class="tgl" type="button" data-layer="layer-truecolor" aria-pressed="true"><span class="sw"></span>True color</button>
+          <button class="tgl" type="button" id="route-toggle" aria-pressed="true"><span class="sw"></span>Smoke-aware route</button>
+        </div>
+      </div>
+      <div class="console-right">
+        <div class="ctl-label">Verdict for a place — tap the map or pick one</div>
+        <div class="place-row" id="place-row">
+          <button class="place-chip on" type="button" data-place="school">Lincoln Heights school</button>
+          <button class="place-chip" type="button" data-place="downtown">Downtown</button>
+          <button class="place-chip" type="button" data-place="highway">Route 9</button>
+          <button class="place-chip" type="button" data-place="home">Your home</button>
+        </div>
+        <div class="verdict avoid" id="verdict-card" role="status">
+          <div class="v-head">
+            <span class="v-word" id="v-word">◉ AVOID</span>
+            <span class="v-place" id="v-place">Lincoln Heights — school &amp; homes</span>
+          </div>
+          <p id="v-body">Smoke reaches Lincoln Heights in about <strong>2 hours</strong> and stays for the rest of the forecast. Keep children indoors from late morning; the safer direction is <strong>northwest</strong>, toward Cedar Ridge.</p>
+          <div class="v-meta">
+            <span id="v-eta">arrival ≈ +2 h</span><span id="v-window">in smoke: +2 h → +6 h</span><span>basis: SAM plume + 850 hPa wind</span>
+          </div>
+        </div>
+        <div class="ask-log" id="ask-log">
+          <div class="ask-q">Is it safe to drive home through Route 9?</div>
+          <div class="ask-a"><strong>Caution.</strong> Smoke crosses the Route 9 junction in about 3 hours. Leave within the hour, or take the northern route — 47 minutes, clear the whole way.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="route-note" role="note">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 19c3 0 3-2.5 3-5V7c0-1.7 1.3-3 3-3h9"/><path d="m15 1 4 3-4 3"/><circle cx="4" cy="19" r="1.6" fill="currentColor"/></svg>
+    <p><strong>Why the green route bends north — the routing rule.</strong> In the real build, the router treats the SAM plume and the forecast cone as <strong>no-go polygons</strong>: every candidate road segment is tested against the plume and against the cone <em>for the hour that segment will be driven</em>, and any segment that falls inside is rejected — it never draws a straight line and hopes. That's why the smoke-aware route leaves Mill Creek heading <strong>northwest</strong> (the verdict's safer direction), stays north of the plume, the cone, and the AOD core, and reaches Downtown in 47 minutes — hours before smoke is due there at about +5&nbsp;h. The red dashed line is the usual route: it cuts straight through the plume, so it's flagged "through smoke" and greyed back. And if your start point <em>is</em> inside the plume, the app says so before routing — <strong>"You are in the smoke — leave heading northwest"</strong> — instead of quietly routing you out of the zone. The start here is outside the plume, and the map chip on the start point says that too.</p>
+  </div>
+
+  <div class="trio" aria-label="The three verdict states">
+    <div class="vcard avoid">
+      <div class="w">◉ AVOID</div>
+      <p>Smoke arrives within ~3 hours, or the place is already in the plume. The card always says <em>when</em> it arrives and <em>which way is safer</em>.</p>
+      <div class="rule">RULE · arrival ≤ 3 h → AVOID</div>
+    </div>
+    <div class="vcard caution">
+      <div class="w">◎ CAUTION</div>
+      <p>Smoke arrives later in the window, or only clips the area. The card gives the deadline to act by — "leave within the hour" — not just a warning.</p>
+      <div class="rule">RULE · arrival 3–6 h → CAUTION</div>
+    </div>
+    <div class="vcard safe">
+      <div class="w">○ SAFE</div>
+      <p>Outside the cone for the full 6 hours. The card still shows the nearest smoke and the wind, so "safe" never reads as "no fire exists."</p>
+      <div class="rule">RULE · no arrival in window → SAFE</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MOBILE ================= -->
+<section id="mobile">
+  <div class="sec-head">
+    <span class="sec-tag">Screens 03–05 · Mobile</span>
+    <h2>Phone-first: the demo is judged on a big screen, but people use this in a driveway</h2>
+    <p>Same two modes, rebuilt for one hand. The map stays full-bleed; everything else lives in a bottom sheet you can drag. Voice is a first-class tab, not a hidden menu item — a driver can't type.</p>
+  </div>
+  <div class="phones">
+    <div>
+      <div class="phone"><div class="scr">
+        <div class="notch"></div>
+        <div class="mini-appbar">
+          <span style="font-weight:700;display:flex;gap:7px;align-items:center"><span style="width:24px;height:24px;border-radius:7px;background:var(--ember);display:inline-grid;place-items:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 19c4-1 5-4 5-7V4c4 2 6 5 6 9 2-1 3-2 4-4 1 5-1 10-6 11H6"/></svg></span>PlumeRoute</span>
+          <span class="mono" style="font-size:10.5px;color:#8fa5ba">FIRMS · ~3 h old</span>
+        </div>
+        <div class="mini-map">
+          <svg viewBox="0 0 280 240" aria-hidden="true">
+            <rect width="280" height="240" fill="#16212d"/>
+            <path d="M0 60 C80 40 150 70 280 44 L280 0 L0 0Z" fill="#1b2836"/>
+            <path d="M0 240 L0 180 C90 200 170 168 280 200 L280 240Z" fill="#1b2836"/>
+            <g stroke="#2c3d4f" stroke-width="3.4" fill="none"><path d="M10 210 L120 150 L280 92"/><path d="M70 240 L104 120 L138 6"/></g>
+            <ellipse cx="168" cy="104" rx="95" ry="40" fill="#c96a1e" opacity=".3"/>
+            <path d="M96 138 C118 118 152 106 182 100 C196 97 198 108 186 113 C158 124 126 136 108 144 C96 148 90 145 96 138Z" fill="#ff7a1a" opacity=".55"/>
+            <polygon points="150,104 280,58 280,116 158,120" fill="#f4822a" opacity=".22"/>
+            <circle cx="98" cy="140" r="7" fill="#ff5a1f" stroke="#ffd9bd" stroke-width="1.6"/>
+            <circle cx="188" cy="94" r="6" fill="#16212d" stroke="#fff" stroke-width="2"/>
+            <circle cx="56" cy="206" r="6" fill="#16212d" stroke="#fff" stroke-width="2"/>
+          </svg>
+        </div>
+        <div style="padding:2px 16px;display:flex;align-items:center;gap:10px">
+          <span class="mono" style="font-size:11px;color:#ffb38a">+3 h</span>
+          <div style="flex:1;height:5px;border-radius:99px;background:#26374a;position:relative"><i style="position:absolute;left:0;top:0;bottom:0;width:50%;background:var(--ember);border-radius:99px;display:block"></i></div>
+          <span class="mono" style="font-size:11px;color:#7286a0">+6 h</span>
+        </div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <div class="vrow">
+            <span style="font-size:19px;font-weight:700;color:var(--red)">◉ AVOID</span>
+            <h4>Lincoln Heights</h4>
+          </div>
+          <p>Smoke arrives in about <strong>2 hours</strong>. Safer direction: <strong>northwest</strong>.</p>
+          <div class="btnrow">
+            <button class="btn primary small" type="button">Route around it</button>
+            <button class="btn small" type="button">Details</button>
+          </div>
+        </div>
+                <div class="tabbar">
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Trend</div>
+          <div class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2ZM9 4v14M15 6v14"/></svg>Live</div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Ask</div>
+        </div>
+      </div></div>
+      <div class="phone-cap"><b>Live — bottom-sheet verdict</b><span>Map never leaves the screen; the sheet carries the answer. Thumb slider for the forecast hour.</span></div>
+    </div>
+
+    <div>
+      <div class="phone"><div class="scr">
+        <div class="notch"></div>
+        <div class="mini-appbar">
+          <span style="font-weight:700">Trend · <span id="phone-trend-loc">Lincoln County</span></span>
+          <span class="mono" style="font-size:10.5px;color:#8fa5ba">2000 — today</span>
+        </div>
+        <div style="margin:8px 12px 0;background:#1b2634;border:1px solid #2b3a4d;border-radius:10px;padding:8px 10px;display:flex;gap:7px;align-items:center;font-size:11.5px;color:#cfdce9"><span style="width:22px;height:22px;border-radius:6px;background:#2c3d4f;display:grid;place-items:center;flex:none">◎</span><span>Map AOI: <b id="phone-trend-aoi">Lincoln County</b> — charts follow this place</span></div>
+        <p style="padding:8px 16px 0;font-size:12.5px;color:#9fb2c3">Fire days per week — this season runs hot <span id="phone-trend-for">for Lincoln County</span>.</p>
+        <div class="cal-mini" id="cal-mini" aria-hidden="true"></div>
+        <div style="padding:10px 16px 0">
+          <svg viewBox="0 0 250 92" style="width:100%" aria-hidden="true">
+            <g fill="#f4822a">
+              <rect x="8" y="52" width="14" height="34"/><rect x="30" y="46" width="14" height="40"/><rect x="52" y="34" width="14" height="52"/><rect x="74" y="22" width="14" height="64"/><rect x="96" y="14" width="14" height="72"/><rect x="118" y="24" width="14" height="62"/><rect x="140" y="40" width="14" height="46"/><rect x="162" y="54" width="14" height="32"/><rect x="184" y="64" width="14" height="22"/><rect x="206" y="72" width="14" height="14"/><rect x="228" y="78" width="14" height="8"/>
+            </g>
+            <path d="M6 66 L28 62 L50 58 L72 52 L94 48 L116 50 L138 56 L160 62 L182 68 L204 74 L226 78 L246 80" stroke="#7fb3d9" stroke-width="2.4" fill="none" stroke-dasharray="5 4"/>
+          </svg>
+          <p class="mono" style="font-size:10.5px;color:#8fa5ba;margin-top:2px">BARS 2026 · - - 10-YEAR AVERAGE</p>
+        </div>
+        <div style="margin:auto 12px 14px;background:#381d17;border:1.5px solid #ff6a55;border-radius:14px;padding:12px 14px">
+          <b style="color:#ff8a75;font-size:15px">Significantly above normal</b>
+          <p style="font-size:12.5px;color:#e8c9c2;margin-top:3px">Fire days are 41% above the 10-year average (p = 0.03). Computed in code from the harmonized archive.</p>
+        </div>
+                <div class="tabbar">
+          <div class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Trend</div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2ZM9 4v14M15 6v14"/></svg>Live</div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Ask</div>
+        </div>
+      </div></div>
+      <div class="phone-cap"><b>Trend — map location + calendar + verdict</b><span>Same location rule on phone: set the area on the trend map first, then the heat strip, year chart, and verdict are for that place only. History only — no live route on this screen; routing lives in Live.</span></div>
+    </div>
+
+    <div>
+      <div class="phone"><div class="scr">
+        <div class="notch"></div>
+        <div class="mini-appbar">
+          <span style="font-weight:700">Ask PlumeRoute</span>
+          <span class="mono" style="font-size:10.5px;color:#8fa5ba">Muse Voice</span>
+        </div>
+        <div class="chat">
+          <div class="bub me">Is it safe to drive home through Route 9?</div>
+          <div style="align-self:flex-start;padding-left:4px">
+            <div class="wave" aria-hidden="true"><i style="height:8px"></i><i style="height:16px"></i><i style="height:24px"></i><i style="height:12px"></i><i style="height:20px"></i><i style="height:26px"></i><i style="height:10px"></i><i style="height:18px"></i><i style="height:8px"></i></div>
+          </div>
+          <div class="bub bot"><b>Caution.</b> Smoke crosses the Route 9 junction in about 3 hours. Leave within the hour, or take the northern route — 47 minutes, clear the whole way.</div>
+          <div class="bub me">What about the school run tomorrow morning?</div>
+          <div class="bub bot"><b>Too early to call.</b> The forecast window is 6 hours and the data runs ~3 hours behind. Check again after 6 AM — I'll have a fresh pass by then.</div>
+          <div class="bub bot" style="background:#22303f;border:1px dashed #3a5069">Honest by design: when the data can't answer, the app says so instead of guessing.</div>
+        </div>
+        <div style="margin-top:auto;padding:12px 14px calc(12px + 2px);display:flex;gap:9px;align-items:center">
+          <button type="button" aria-label="Hold to talk" style="width:52px;height:52px;min-height:52px;border-radius:50%;border:0;background:var(--ember);display:grid;place-items:center;flex:none">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+          </button>
+          <div style="flex:1;background:#1b2634;border:1px solid #2b3a4d;border-radius:999px;padding:11px 16px;color:#7286a0;font-size:13px">Hold to talk, or type…</div>
+        </div>
+                <div class="tabbar">
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Trend</div>
+          <div><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2ZM9 4v14M15 6v14"/></svg>Live</div>
+          <div class="on"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Ask</div>
+        </div>
+      </div></div>
+      <div class="phone-cap"><b>Ask — voice in, verdict out</b><span>Muse Voice transcribes; Muse Spark phrases the answer. Numbers still come from code, never the model.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DESIGN SYSTEM ================= -->
+<section id="system">
+  <div class="sec-head">
+    <span class="sec-tag">Design system</span>
+    <h2>Tokens first, screens second — this is what Saturday codes against</h2>
+    <p>A dark, instrument-like theme: satellite imagery is dark, smoke is amber, and the three verdict colors are reserved for verdicts only — they never decorate anything else. If red appears on screen, it always means AVOID.</p>
+  </div>
+
+  <div class="ds-grid">
+    <div class="swatch"><div class="chipc" style="background:#131c26"></div><div class="meta"><b>Map Ink</b><span>#131C26</span><p>Map base, app chrome, phone shell</p></div></div>
+    <div class="swatch"><div class="chipc" style="background:#d9510d"></div><div class="meta"><b>Ember</b><span>#D9510D</span><p>Primary actions, fire, brand mark</p></div></div>
+    <div class="swatch"><div class="chipc" style="background:#f4822a"></div><div class="meta"><b>Plume</b><span>#F4822A</span><p>Plume fill &amp; forecast cone (fades by hour)</p></div></div>
+    <div class="swatch"><div class="chipc" style="background:#8a97a5"></div><div class="meta"><b>Smoke Gray</b><span>#8A97A5</span><p>Secondary text on dark, AOD haze labels</p></div></div>
+    <div class="swatch"><div class="chipc" style="background:#c62f1d"></div><div class="meta"><b>Verdict Red</b><span>#C62F1D</span><p>AVOID only — never decorative</p></div></div>
+    <div class="swatch"><div class="chipc" style="background:#e8a00c"></div><div class="meta"><b>Verdict Amber</b><span>#E8A00C</span><p>CAUTION only</p></div></div>
+    <div class="swatch"><div class="chipc" style="background:#177245"></div><div class="meta"><b>Verdict Green</b><span>#177245</span><p>SAFE only, safe-route line</p></div></div>
+    <div class="swatch"><div class="chipc" style="background:#1c5f8a"></div><div class="meta"><b>Archive Blue</b><span>#1C5F8A</span><p>Trend averages, historical data, links</p></div></div>
+  </div>
+
+  <div class="two-col" style="margin-top:18px">
+    <div class="panel">
+      <h3>Type scale — IBM Plex Sans + Mono</h3>
+      <p class="sub">Plex reads like an instrument panel, not a marketing page. Mono is for every number a judge might check.</p>
+      <div class="type-row"><span class="tk">DISPLAY / 700</span><span style="font-size:30px;font-weight:700;letter-spacing:-.02em">Smoke reaches town in 2 h</span></div>
+      <div class="type-row"><span class="tk">H2 / 700</span><span style="font-size:21px;font-weight:700">Is this season normal?</span></div>
+      <div class="type-row"><span class="tk">BODY / 400</span><span style="font-size:15.5px">Verdicts are one or two plain sentences: verdict, arrival time, safer direction.</span></div>
+      <div class="type-row"><span class="tk">DATA / MONO</span><span class="mono" style="font-size:14px">FRP 84 MW · AOD 0.62 · p = 0.03 · +3 h</span></div>
+      <div class="type-row"><span class="tk">MICRO / MONO</span><span class="mono" style="font-size:11.5px;letter-spacing:.1em">FIRMS NRT · ~3 H LATENCY · VIIRS 375 M</span></div>
+    </div>
+    <div>
+      <div class="comp-list">
+        <div class="comp"><span class="lbl">Buttons</span>
+          <button class="btn primary" type="button">Route around it</button>
+          <button class="ghost-btn" type="button">View trend</button>
+          <button class="btn" type="button">Dismiss</button>
+        </div>
+        <div class="comp"><span class="lbl">Verdict pills — icon + word, never color alone</span>
+          <span class="kbd-chip" style="border-color:var(--red);color:var(--red);background:var(--red-soft)">◉ AVOID</span>
+          <span class="kbd-chip" style="border-color:var(--amber);color:var(--amber);background:var(--amber-soft)">◎ CAUTION</span>
+          <span class="kbd-chip" style="border-color:var(--green);color:var(--green);background:var(--green-soft)">○ SAFE</span>
+        </div>
+        <div class="comp"><span class="lbl">Freshness toast — data age is always visible</span>
+          <span class="toast"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Satellite data ~3 h old — not real-time</span>
+        </div>
+        <div class="comp"><span class="lbl">Layout tokens</span>
+          <span class="mono" style="font-size:12.5px;color:var(--ink2)">radius 14px cards · 10px controls · spacing 4/8/12/20/32 · touch targets ≥ 44px · sheet radius 20px</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="a11y">
+    <div class="card"><b>Color is never the only signal</b><p>Every verdict pairs color with a distinct icon (◉ ◎ ○) and the word itself — readable in grayscale, in sunlight, and for color-blind users.</p></div>
+    <div class="card"><b>Built for stress, not browsing</b><p>Verdict text is 15px minimum, primary actions are 44px+ targets, and the one question that matters — "am I in the smoke's path?" — is answerable in under 3 seconds.</p></div>
+    <div class="card"><b>Captions &amp; spoken parity</b><p>Every voice answer also renders as text (the demo video rule: judges watch muted). Spoken verdicts lead with the verdict word, then the reason.</p></div>
+  </div>
+</section>
+
+<!-- ================= FLOWS ================= -->
+<section id="flows">
+  <div class="sec-head">
+    <span class="sec-tag">Flow diagrams</span>
+    <h2>Three flows: the journey, the data, the screens</h2>
+    <p>Rendered here as diagrams, with copy-ready Mermaid source under each one. Paste the Mermaid into the repo README or the project page — it renders exactly, which is why flows are drawn in code, never generated as images.</p>
+  </div>
+
+  <div class="flowbox">
+    <h3><span class="n">A</span> User journey — from opening the app to a decision</h3>
+    <p class="sub">One session, two questions answered: "where is the smoke going?" (Live) and "is this normal?" (Trend).</p>
+    <div class="flow" role="img" aria-label="User journey flowchart: open app, live map loads, user picks a place or asks by voice, verdict appears, route offered, then trend view answers whether the season is normal">
+      <div class="fnode start"><b>Open PlumeRoute</b><span>Location shared or searched</span></div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fnode"><b>Live map loads</b><span>FIRMS fires + GIBS imagery + SAM plume</span></div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fnode decision"><b>How do they ask?</b><span>Tap a place · search · speak a question</span></div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fnode"><b>Trajectory runs</b><span>Plume advected +1–6 h on 850 hPa winds</span></div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fbranch">
+        <div class="fnode" style="border-color:var(--red);background:var(--red-soft)"><b>AVOID / CAUTION</b><span>Arrival time + safer direction</span></div>
+        <div class="fnode" style="border-color:var(--green);background:var(--green-soft)"><b>SAFE</b><span>Nearest smoke + wind shown</span></div>
+      </div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fnode"><b>Smoke-aware route — Live only</b><span>Around the cone, time cost stated · the Live decision ends here — not part of Trend</span></div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fnode"><b>Switch to Trend — separate tab</b><span>Reached by the mode tab, not via the route · history only for that AOI</span></div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fnode end"><b>"Is this normal?" — answered</b><span>Significance verdict, computed in code</span></div>
+    </div>
+    <div class="codeblock"><button class="copy-btn" type="button" data-copy="mermaid-a">Copy Mermaid</button><pre id="mermaid-a">flowchart LR
+  A[Open PlumeRoute] --&gt; B[Live map: FIRMS + GIBS + SAM plume]
+  B --&gt; C{Ask how?}
+  C --&gt;|Tap / search| D[Place selected]
+  C --&gt;|Voice| E[Muse Voice transcribes]
+  E --&gt; D
+  D --&gt; F[Trajectory: plume advected +1-6 h on 850 hPa winds]
+  F --&gt; G{Verdict}
+  G --&gt;|arrival &lt;= 3 h| H[AVOID: arrival time + safer direction]
+  G --&gt;|arrival 3-6 h| I[CAUTION: deadline to act]
+  G --&gt;|no arrival| J[SAFE: nearest smoke shown]
+  H --&gt; K[Smoke-aware route around the cone - Live only, ends here]
+  I --&gt; K
+  J --&gt; L[Trend map: AOI defaults to Live location, tap/search to change]
+  B --&gt;|Mode tab| L
+  L --&gt; L2[Calendar + year-over-year rebuilt for that AOI only]
+  L2 --&gt; M[Is this normal for this place? — significance verdict, computed in code]</pre></div>
+  </div>
+
+  <div class="flowbox">
+    <h3><span class="n">B</span> Data &amp; system flow — what feeds what, and where the models sit</h3>
+    <p class="sub">The Meta models phrase and explain. They never originate a number: areas, arrival times, and the trend verdict are all computed in code from NASA data.</p>
+    <div class="pipe" role="img" aria-label="Data pipeline: NASA sources feed processing, processing feeds the Muse layer, the Muse layer feeds the interface">
+      <div class="col"><h5>1 · Sources (NASA + weather)</h5><div class="stack">
+        <div class="fnode"><b>FIRMS NRT</b><span>VIIRS + MODIS detections, ~3 h latency</span></div>
+        <div class="fnode"><b>GIBS imagery</b><span>True color + MODIS AOD overlay tiles</span></div>
+        <div class="fnode"><b>FIRMS archive 2000–</b><span>Historical hot spots for the trend view</span></div>
+        <div class="fnode"><b>Open-Meteo</b><span>850 hPa wind vectors for advection</span></div>
+      </div></div>
+      <div class="col"><h5>2 · Processing (in code)</h5><div class="stack">
+        <div class="fnode model"><b>SAM 3.1 segmentation</b><span>Plume polygon + area in km² from GIBS imagery</span></div>
+        <div class="fnode"><b>Trajectory advection</b><span>Plume pushed hourly, cone widens + fades</span></div>
+        <div class="fnode"><b>Harmonization</b><span>VIIRS counts normalized (~÷3) to MODIS baseline</span></div>
+        <div class="fnode"><b>Significance test</b><span>Season vs 10-year average → verdict + p-value</span></div>
+      </div></div>
+      <div class="col"><h5>3 · Muse layer (language only)</h5><div class="stack">
+        <div class="fnode model"><b>Muse Spark 1.3</b><span>Turns computed verdicts into plain sentences; agent logic</span></div>
+        <div class="fnode model"><b>Muse Voice</b><span>Speech → question, verdict → spoken answer</span></div>
+        <div class="fnode model"><b>Muse Image</b><span>Explainer graphics for the project page (watermarked)</span></div>
+      </div></div>
+      <div class="col"><h5>4 · Interface</h5><div class="stack">
+        <div class="fnode"><b>Live map</b><span>Google Maps + overlays + time slider</span></div>
+        <div class="fnode"><b>Verdict card / sheet</b><span>AVOID · CAUTION · SAFE + smoke-aware route (Live only)</span></div>
+        <div class="fnode"><b>Trend view</b><span>Calendar heatmap + YoY chart + verdict banner · history only — no route</span></div>
+      </div></div>
+    </div>
+    <div class="guard"><strong>Guardrail, drawn on the diagram on purpose:</strong> arrows only flow left → right. The Muse layer receives finished numbers and returns words. If a number can't be computed (stale pass, out of window), the UI says "too early to call" — it never lets the model fill the gap.</div>
+    <div class="codeblock"><button class="copy-btn" type="button" data-copy="mermaid-b">Copy Mermaid</button><pre id="mermaid-b">flowchart LR
+  subgraph S[Sources]
+    F1[FIRMS NRT detections]
+    F2[GIBS true color + AOD]
+    F3[FIRMS archive 2000-]
+    F4[Open-Meteo 850 hPa winds]
+  end
+  subgraph P[Processing - in code]
+    SAM[SAM 3.1 plume segmentation]
+    ADV[Trajectory advection +1-6 h]
+    HARM[Harmonization: VIIRS normalized to MODIS]
+    SIG[Significance test vs 10-yr average]
+  end
+  subgraph M[Muse layer - language only]
+    SPARK[Muse Spark 1.3: verdict wording]
+    VOICE[Muse Voice: speech in / out]
+    IMG[Muse Image: explainers]
+  end
+  subgraph U[Interface]
+    MAP[Live map + time slider]
+    CARD[Live: verdict card + smoke-aware route]
+    TREND[Trend: calendar + YoY + verdict banner - history only]
+  end
+  F2 --&gt; SAM --&gt; ADV
+  F1 --&gt; ADV
+  F4 --&gt; ADV --&gt; SPARK
+  F3 --&gt; HARM --&gt; SIG --&gt; SPARK
+  VOICE --&gt; SPARK
+  SPARK --&gt; MAP &amp; CARD &amp; TREND
+  IMG --&gt; TREND</pre></div>
+  </div>
+
+  <div class="flowbox">
+    <h3><span class="n">C</span> Screen navigation — five screens, two tabs, no dead ends</h3>
+    <p class="sub">Every screen can reach a verdict in one tap, and the limits/about sheet is reachable from everywhere — honesty is a navigation requirement, not a footer.</p>
+    <div class="flow" role="img" aria-label="Screen map: Live map connects to place sheet, route view, and voice overlay; Trend connects to area picker and year compare; limits sheet is global">
+      <div class="fnode start"><b>Live map</b><span>Home screen · fires, plume, cone, slider</span></div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fbranch">
+        <div class="fnode"><b>Place sheet</b><span>Verdict, arrival, safer direction</span></div>
+        <div class="fnode"><b>Voice overlay</b><span>Hold to talk → spoken verdict</span></div>
+        <div class="fnode"><b>Route view — Live only</b><span>Usual vs smoke-aware, time cost · stays in Live, never in Trend</span></div>
+      </div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fnode"><b>Trend — separate tab</b><span>History only: trend map + calendar, YoY, verdict — all for selected AOI · no route</span></div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fbranch">
+        <div class="fnode"><b>Trend map / Area picker</b><span>Tap map, search, or follow Live location</span></div>
+        <div class="fnode"><b>Year compare</b><span>Any season vs that place's 10-yr average</span></div>
+      </div>
+      <div class="farr"><svg width="26" height="12" viewBox="0 0 26 12"><path d="M0 6h20M15 1l6 5-6 5" stroke="currentColor" stroke-width="2" fill="none"/></svg></div>
+      <div class="fnode end"><b>Limits sheet (global)</b><span>~3 h latency · AOD ≠ street air · drift ≠ dispersion</span></div>
+    </div>
+    <div class="codeblock"><button class="copy-btn" type="button" data-copy="mermaid-c">Copy Mermaid</button><pre id="mermaid-c">flowchart TB
+  LIVE[Live map] --&gt; SHEET[Place sheet: verdict]
+  LIVE --&gt; VOICE[Voice overlay]
+  SHEET --&gt; ROUTE[Live only - Route view: usual vs smoke-aware]
+  LIVE --&gt; TREND[Trend - map first, history only]
+  TREND --&gt; AREA[Trend map / Area picker - tap, search, follow Live]
+  AREA --&gt; TREND
+  TREND --&gt; YEAR[Year compare for selected AOI]
+  LIVE -.-> LIMITS[Limits sheet - reachable everywhere]
+  TREND -.-> LIMITS
+  VOICE -.-> LIMITS</pre></div>
+  </div>
+</section>
+
+<!-- ================= META WORKFLOW ================= -->
+<section id="meta">
+  <div class="sec-head">
+    <span class="sec-tag">How this was designed</span>
+    <h2>Using Meta to design UI/UX: Image for the look, Spark for the build</h2>
+    <p>Two tools, two different jobs. Muse Image sketches what a screen could feel like; Muse Spark produces the design system, real HTML wireframes, and flow diagrams as code. This page is itself a Spark-built artifact — the prompts below are the ones that produce work like it.</p>
+  </div>
+
+  <div class="vs">
+    <div class="tool-card">
+      <div class="t-head">
+        <span class="t-ico" style="background:var(--ember-soft);color:var(--ember-strong)"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5-9 9"/></svg></span>
+        <div><h3>Muse Image</h3><span class="role">Pictures of screens · look &amp; feel</span></div>
+      </div>
+      <ul>
+        <li><b>Best at:</b> mood and direction — the dark emergency theme, how dense the map should feel, a verdict card's visual weight.</li>
+        <li><b>Iterate by edit:</b> "make the map full-bleed, move the verdict to a bottom sheet, more contrast on the cone."</li>
+        <li><b>Watch out:</b> it garbles small text and misdraws arrows and charts. Never use it for flow diagrams, data, or final screens.</li>
+        <li><b>Submission rule:</b> AI-generated images on the project page must be watermarked / disclosed.</li>
+      </ul>
+    </div>
+    <div class="tool-card">
+      <div class="t-head">
+        <span class="t-ico" style="background:var(--blue-soft);color:var(--blue)"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m8 6-6 6 6 6M16 6l6 6-6 6"/></svg></span>
+        <div><h3>Muse Spark 1.3</h3><span class="role">The workhorse · systems, wireframes, flows</span></div>
+      </div>
+      <ul>
+        <li><b>Best at:</b> design tokens, clickable HTML wireframes, screen lists, and Mermaid flow diagrams that render exactly.</li>
+        <li><b>Ask for artifacts, not advice:</b> "give me the CSS variables," "give me the Mermaid source," "give me the component list."</li>
+        <li><b>Same model, second job:</b> Spark is also PlumeRoute's runtime agent — the verdict wording in the product itself.</li>
+        <li><b>Design now, build Saturday:</b> a static mockup with placeholder data is prep; wiring live FIRMS data is the hackathon build.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><span class="n">STEP 1</span><b>Sketch the feel</b><p>Muse Image: 3–4 map-screen sketches. Pick a direction in minutes, not hours.</p></div>
+    <div class="step"><span class="n">STEP 2</span><b>Lock the system</b><p>Spark turns the chosen sketch into tokens: colors, type, spacing, verdict rules.</p></div>
+    <div class="step"><span class="n">STEP 3</span><b>Wireframe in HTML</b><p>Spark builds clickable wireframes — real layout you can tap through on a phone.</p></div>
+    <div class="step"><span class="n">STEP 4</span><b>Draw flows in Mermaid</b><p>Journey, data, navigation — as code, so they render perfectly in the README.</p></div>
+    <div class="step"><span class="n">STEP 5</span><b>Build against data</b><p>Saturday: swap placeholder numbers for live FIRMS/GIBS computation, keep the design.</p></div>
+  </div>
+
+  <div class="prompts">
+    <div class="prompt-card">
+      <h4>Prompt — the whole design package in one shot</h4>
+      <div class="pbody" id="prompt-1">Design the UI for a wildfire smoke app with two modes, Live and Trend. Live: full-screen map, plume polygon, trajectory slider, verdict card (avoid / caution / safe). Trend: burning-activity calendar heatmap, year-over-year chart. Give me: 1) a design system, 2) clickable HTML wireframes, 3) a user-flow diagram in Mermaid, 4) the screen list and navigation.</div>
+      <button class="copy-btn" type="button" data-copy="prompt-1">Copy prompt</button>
+    </div>
+    <div class="prompt-card">
+      <h4>Prompt — Muse Image look &amp; feel sketch</h4>
+      <div class="pbody" id="prompt-2">Mobile-first web app UI, dark emergency theme, full-screen satellite map with a wildfire smoke plume overlay, bottom card showing an AVOID verdict in red, trajectory cone, time slider, clean sans-serif, high contrast.</div>
+      <button class="copy-btn" type="button" data-copy="prompt-2">Copy prompt</button>
+    </div>
+    <div class="prompt-card">
+      <h4>Prompt — flow diagram that renders exactly</h4>
+      <div class="pbody" id="prompt-3">Draw the user journey as a Mermaid flowchart: open app → location → map with fires → tap a place → verdict → smoke-aware route (Live only) · separate Trend tab → compare seasons.</div>
+      <button class="copy-btn" type="button" data-copy="prompt-3">Copy prompt</button>
+    </div>
+    <div class="prompt-card">
+      <h4>Prompt — verdict copy rules</h4>
+      <div class="pbody" id="prompt-4">Write the copy rules for a three-state safety verdict (AVOID / CAUTION / SAFE). Every verdict must include: the verdict word first, when the smoke arrives, and which direction is safer. One or two plain sentences. The numbers are supplied by code — never invent one. Give me three worked examples per state.</div>
+      <button class="copy-btn" type="button" data-copy="prompt-4">Copy prompt</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BUILD ORDER ================= -->
+<section id="build">
+  <div class="sec-head">
+    <span class="sec-tag">Handoff</span>
+    <h2>Build order — every phase maps to a screen on this page</h2>
+    <p>Saturday 1:00 PM to Sunday noon, in the order the demo needs it. If time runs short, cut from the bottom of this list — never from the trend view, which is the challenge itself.</p>
+  </div>
+  <div class="timeline">
+    <div class="tl-item">
+      <span class="when">SAT 1:00 – 4:00 PM</span>
+      <h3>Phase 1 — Map + fires + imagery</h3>
+      <p>Google Map with the restricted key, FIRMS NRT points for Saturday morning's most active fire region, GIBS true-color and AOD tile layers. This fixes the demo region for everything after.</p>
+      <div class="screens"><span class="kbd-chip">Screen 02 · Live map</span><span class="kbd-chip">Layer toggles</span></div>
+    </div>
+    <div class="tl-item">
+      <span class="when">SAT 4:00 – 8:00 PM</span>
+      <h3>Phase 2 — Plume + trajectory (the novel core)</h3>
+      <p>SAM 3.1 segments the plume from GIBS imagery (area in km²), Open-Meteo 850 hPa winds advect it hourly, the cone widens and fades behind the time slider.</p>
+      <div class="screens"><span class="kbd-chip">Plume polygon</span><span class="kbd-chip">Cone + slider</span><span class="kbd-chip">Wind chip</span></div>
+    </div>
+    <div class="tl-item">
+      <span class="when">SAT 8:00 PM – SUN 9:00 AM</span>
+      <h3>Phase 3 — Verdicts, route, voice</h3>
+      <p>Place tap → verdict card with the three-state rules; smoke-aware route vs usual route with the time cost stated; Muse Voice query in, spoken verdict out.</p>
+      <div class="screens"><span class="kbd-chip">Verdict card</span><span class="kbd-chip">Route view</span><span class="kbd-chip">Ask screen</span></div>
+    </div>
+    <div class="tl-item">
+      <span class="when">SUN 9:00 – 11:00 AM</span>
+      <h3>Phase 4 — Trend view (map-first, location-based)</h3>
+      <p>Trend map first: pick / tap / search an AOI (or follow the Live location), query the harmonized archive for that AOI only (VIIRS normalized), then build its calendar heatmap, year-over-year chart, and significance verdict in code. Keep it central in the demo — it answers the brief as written, for the place the user chose.</p>
+      <div class="screens"><span class="kbd-chip">Screen 05 · Trend map + AOI</span><span class="kbd-chip">Location-based calendar + YoY</span><span class="kbd-chip">Harmonization panel</span><span class="kbd-chip">CSV for selected AOI</span></div>
+    </div>
+    <div class="tl-item">
+      <span class="when">SUN 11:00 AM – 12:00 PM</span>
+      <h3>Phase 5 — Video, page, submit</h3>
+      <p>Record the 2-minute demo from the saved script (captions on), finish the project page — description, data sources linked, AI tools disclosed — and submit in both places.</p>
+      <div class="screens"><span class="kbd-chip">Demo script beats 1–5</span><span class="kbd-chip">Limits strip</span></div>
+    </div>
+  </div>
+
+  <div class="deadline">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="flex:none;margin-top:2px" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+    <div>
+      <b>Sunday Nov 15, 12:00 PM ET — Boston deadline (not the 5 PM global window)</b>
+      <p>Submit through <strong>both</strong> the official NASA Space Apps site <strong>and</strong> the Boston local judging form (link on Discord only). Then present <strong>live at 1:00 PM ET</strong> — submitting alone is not sufficient for award consideration. Winners announced 4:30 PM.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:34px">The limits strip — designed as UI, ships in the app footer and on screen in demo beat 5</h3>
+  <div class="limits">
+    <div class="card"><b>~3 hours behind real time</b><p>FIRMS/GIBS data latency. The freshness toast shows data age on every screen — never hidden.</p></div>
+    <div class="card"><b>AOD is an estimate</b><p>Aerosol optical depth is a satellite column measurement, not street-level PM2.5 air quality.</p></div>
+    <div class="card"><b>Drift, not dispersion</b><p>The trajectory is wind advection of the measured plume — situational awareness, never a replacement for official evacuation orders.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <span><b>PlumeRoute</b> — Team PlumeRoute, NASA Space Apps Boston 2026 (virtual, from Maryland)</span>
+      <span><b>Data:</b> NASA FIRMS · NASA GIBS / Worldview · Open-Meteo</span>
+      <span><b>Built with:</b> Muse Spark 1.3 · SAM 3.1 · Muse Image · Muse Voice</span>
+      <span><b>Challenge:</b> Harmonization of MODIS and VIIRS Hot Spots</span>
+    </div>
+    <p style="margin-top:12px">Design artifact — all in-frame data is sample data for layout. The shipped app computes every number from live sources.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- scroll spy ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll("#subnav a"));
+  var secs = links.map(function(a){ return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && secs.length){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){
+          links.forEach(function(a){ a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id); });
+        }
+      });
+    }, { rootMargin: "-30% 0px -60% 0px" });
+    secs.forEach(function(s){ io.observe(s); });
+  }
+
+  /* ---------- live mockup: places & verdicts ---------- */
+  var PLACES = {
+    school:   { name:"Lincoln Heights — school & homes", verdict:"avoid",
+      body:'Smoke reaches Lincoln Heights in about <strong>2 hours</strong> and stays for the rest of the forecast. Keep children indoors from late morning; the safer direction is <strong>northwest</strong>, toward Cedar Ridge.',
+      eta:"arrival ≈ +2 h", window:"in smoke: +2 h → +6 h", arrival:2 },
+    downtown: { name:"Downtown", verdict:"caution",
+      body:'The cone reaches Downtown around <strong>+5 hours</strong> — outside the school-run window, inside the evening commute. Plan the trip home before then, or expect a smoky drive.',
+      eta:"arrival ≈ +5 h", window:"in smoke: +5 h → +6 h", arrival:5 },
+    highway:  { name:"Route 9 junction", verdict:"caution",
+      body:'Smoke crosses the Route 9 junction in about <strong>3 hours</strong>. Leave within the hour for a clear drive, or take the <strong>northern route</strong> — 47 minutes, clear the whole way.',
+      eta:"arrival ≈ +3 h", window:"in smoke: +3 h → +6 h", arrival:3 },
+    home:     { name:"Your home — Mill Creek", verdict:"safe",
+      body:'Mill Creek stays <strong>upwind and outside the cone</strong> for the full 6-hour window. The nearest smoke is about 14 km northeast and moving away from you.',
+      eta:"no arrival in window", window:"nearest smoke ≈ 14 km NE", arrival:null }
+  };
+  var VWORDS = { avoid:"◉ AVOID", caution:"◎ CAUTION", safe:"○ SAFE" };
+  var card = document.getElementById("verdict-card");
+  var currentLivePlace = "school";
+  function setPlace(key){
+    var p = PLACES[key]; if (!p) return;
+    currentLivePlace = key;
+    card.className = "verdict " + p.verdict;
+    document.getElementById("v-word").textContent = VWORDS[p.verdict];
+    document.getElementById("v-place").textContent = p.name;
+    document.getElementById("v-body").innerHTML = p.body;
+    document.getElementById("v-eta").textContent = p.eta;
+    document.getElementById("v-window").textContent = p.window;
+    Array.prototype.forEach.call(document.querySelectorAll("#place-row .place-chip"), function(ch){
+      ch.classList.toggle("on", ch.getAttribute("data-place") === key);
+    });
+  }
+  document.getElementById("place-row").addEventListener("click", function(e){
+    var b = e.target.closest("[data-place]"); if (b) setPlace(b.getAttribute("data-place"));
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".place-dot"), function(g){
+    g.addEventListener("click", function(){ setPlace(g.getAttribute("data-place")); });
+  });
+
+  /* ---------- search mock ---------- */
+  var search = document.getElementById("search-input");
+  search.addEventListener("input", function(){
+    var q = search.value.toLowerCase();
+    if (q.indexOf("school") > -1 || q.indexOf("lincoln") > -1) setPlace("school");
+    else if (q.indexOf("down") > -1) setPlace("downtown");
+    else if (q.indexOf("route") > -1 || q.indexOf("9") > -1) setPlace("highway");
+    else if (q.indexOf("home") > -1) setPlace("home");
+  });
+
+  /* ---------- time slider & cone ---------- */
+  var slider = document.getElementById("time-slider");
+  var out = document.getElementById("slider-out");
+  var etaLine = document.getElementById("eta-line");
+  var ETA_TEXT = [
+    'Right now: the plume sits over the <b>Cedar Ridge</b> burn scar. <b>Lincoln Heights is clear</b> — the cone has not reached it yet.',
+    'At <b>+1 h</b>, the cone\'s edge touches open ground east of the fire. <b>Lincoln Heights is still clear</b>; arrival is about an hour away.',
+    'At <b>+2 h</b>, smoke reaches <b>Lincoln Heights</b> — the school and homes there move to <b>AVOID</b>. Route 9 is next, around +3 h.',
+    'At <b>+3 h</b>, the cone covers <b>Lincoln Heights</b> and reaches the <b>Route 9 junction</b>. Downtown is still clear — smoke arrives around <b>+5 h</b>.',
+    'At <b>+4 h</b>, the cone widens over the valley. <b>Downtown is an hour from first smoke</b>; Mill Creek stays upwind and clear.',
+    'At <b>+5 h</b>, smoke reaches <b>Downtown</b>. Lincoln Heights and Route 9 have been in smoke for hours; the safer direction remains <b>northwest</b>.',
+    'At <b>+6 h</b> — the edge of the forecast window — the cone covers Lincoln Heights, Route 9, and Downtown. Beyond this, PlumeRoute says <b>"too early to call."</b>'
+  ];
+  function setHour(h){
+    out.textContent = h === 0 ? "Now" : "+" + h + " h";
+    etaLine.innerHTML = ETA_TEXT[h];
+    Array.prototype.forEach.call(document.querySelectorAll(".cone-seg"), function(seg){
+      seg.style.display = (+seg.getAttribute("data-h") <= h) ? "" : "none";
+    });
+  }
+  slider.addEventListener("input", function(){ setHour(+slider.value); });
+  setHour(3);
+
+  /* ---------- layer toggles ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".tgl[data-layer]"), function(btn){
+    btn.addEventListener("click", function(){
+      var on = btn.getAttribute("aria-pressed") !== "true";
+      btn.setAttribute("aria-pressed", String(on));
+      var g = document.getElementById(btn.getAttribute("data-layer"));
+      if (g) g.style.display = on ? "" : "none";
+    });
+  });
+
+  /* ---------- route toggle ---------- */
+  var rt = document.getElementById("route-toggle");
+  rt.addEventListener("click", function(){
+    var on = rt.getAttribute("aria-pressed") !== "true";
+    rt.setAttribute("aria-pressed", String(on));
+    document.getElementById("route-safe").style.display = on ? "" : "none";
+    document.getElementById("lbl-safe").style.display = on ? "" : "none";
+    document.getElementById("route-start").style.display = on ? "" : "none";
+    document.getElementById("route-direct").style.opacity = on ? ".38" : "1";
+  });
+
+  /* ---------- voice demo ---------- */
+  document.getElementById("voice-demo").addEventListener("click", function(){
+    var log = document.getElementById("ask-log");
+    log.classList.add("show");
+    setPlace("highway");
+    log.scrollIntoView({ behavior:"smooth", block:"nearest" });
+  });
+
+  /* ---------- mode switch ---------- */
+  document.getElementById("mode-trend").addEventListener("click", function(){
+    document.getElementById("trend").scrollIntoView({ behavior:"smooth" });
+  });
+  document.getElementById("mode-live").addEventListener("click", function(){
+    document.getElementById("live").scrollIntoView({ behavior:"smooth" });
+  });
+
+  /* ---------- calendars (seeded, deterministic) ---------- */
+  function seeded(seed){ var s = seed; return function(){ s = (s * 1103515245 + 12345) % 2147483648; return s / 2147483648; }; }
+  var CAL_COLORS = ["#ece7db","#f6cf9a","#f2ac54","#f09a4e","#e05f10","#93330a"];
+  if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches){
+    CAL_COLORS = ["#232c3a","#6b4a17","#9c5f14","#c96a1e","#e05f10","#a03e08"];
+  }
+  function calColor(r, seasonBoost){
+    var v = r() + seasonBoost;
+    if (v < .42) return CAL_COLORS[0];
+    if (v < .62) return CAL_COLORS[1];
+    if (v < .78) return CAL_COLORS[2];
+    if (v < .9) return CAL_COLORS[3];
+    if (v < .97) return CAL_COLORS[4];
+    return CAL_COLORS[5];
+  }
+  function buildCal(el, days, seedBase){
+    var r = seeded(seedBase), html = "";
+    for (var d = 0; d < days; d++){
+      var month = Math.floor(d / (days / 12));
+      var boost = (month >= 5 && month <= 9) ? .34 : (month >= 3 && month <= 4 ? .12 : -.16);
+      html += '<i style="background:' + calColor(r, boost) + '"></i>';
+    }
+    el.innerHTML = html;
+  }
+  buildCal(document.getElementById("cal-main"), 364, 2026);
+  buildCal(document.getElementById("cal-mini"), 98, 77);
+
+  /* ---------- trend: LOCATION-BASED years, stats, chart + trend map ---------- */
+  var TREND_LOCS = {
+    lincoln: { name:"Lincoln County", slug:"lincoln-county", cx:398, cy:128, r:62, coords:"AOI 25 km radius · 39.12°N, −77.24°W",
+      desc:"valley + school area from the Live map. All charts below use only hot spots inside this ring.",
+      seed:0, avg:[12,14,22,38,55,72,88,92,70,44,24,15], hotspots:38,
+      years:{
+        "2024":{months:[10,12,20,33,48,63,74,79,60,38,20,13],firedays:78,detections:"1,036",peak:"August",streak:"8 days",bannerClass:"ok",title:"2024 in Lincoln County sat within the normal range",body:'Fire days ran <strong>6% below</strong> the 2016–2025 average for Lincoln County (two-sample test, <span class="mono">p = 0.41</span> — not significant). A normal season is also an answer worth showing.'},
+        "2025":{months:[13,15,25,42,60,80,95,99,76,48,26,16],firedays:88,detections:"1,164",peak:"August",streak:"9 days",bannerClass:"",title:"2025 in Lincoln County trended hot, but not significantly",body:'Fire days ran <strong>18% above</strong> the 2016–2025 average for Lincoln County (two-sample test, <span class="mono">p = 0.12</span> — not significant at 0.05). The banner says "trending," not "proven" — the test decides the wording.'},
+        "2026":{months:[15,19,30,51,74,102,128,136,94,55,30,18],firedays:96,detections:"1,284",peak:"August",streak:"11 days",bannerClass:"",title:"2026 in Lincoln County is significantly above its 10-year average",body:'Fire days run <strong>41% above</strong> the 2016–2025 average for Lincoln County (two-sample test, <span class="mono">p = 0.03</span>). The verdict is computed in code from harmonized detections inside this AOI — the model only phrases it.'}
+      }},
+    cedar: { name:"Cedar Ridge", slug:"cedar-ridge", cx:190, cy:92, r:54, coords:"AOI 18 km radius · 39.21°N, −77.41°W",
+      desc:"dry ridge and forest edge — historically the earliest and longest fire season in the sample. Charts use ridge hot spots only, not the county total.",
+      seed:1400, avg:[16,18,30,52,78,98,112,108,82,50,28,18], hotspots:46,
+      years:{
+        "2024":{months:[14,16,28,48,70,88,102,98,74,46,24,16],firedays:92,detections:"1,218",peak:"July",streak:"13 days",bannerClass:"ok",title:"2024 on Cedar Ridge was close to its own average",body:'Fire days ran <strong>4% below</strong> the ridge 10-year average (test, <span class="mono">p = 0.52</span>). Same year, different place, different answer than the valley — that is why Trend is location-based.'},
+        "2025":{months:[18,21,34,58,86,108,124,118,90,54,30,20],firedays:108,detections:"1,442",peak:"July",streak:"15 days",bannerClass:"",title:"2025 on Cedar Ridge was hot — significantly above its average",body:'Fire days ran <strong>29% above</strong> the Cedar Ridge 10-year average (test, <span class="mono">p = 0.04</span>). The ridge crosses the significance line a year earlier than Lincoln County does.'},
+        "2026":{months:[22,26,42,68,102,128,148,140,106,64,36,24],firedays:121,detections:"1,618",peak:"July",streak:"17 days",bannerClass:"",title:"2026 on Cedar Ridge is far above its 10-year average",body:'Fire days run <strong>52% above</strong> the Cedar Ridge 10-year average (test, <span class="mono">p = 0.008</span>) — the strongest signal of any AOI on this map. Critical period here starts in June, not August.'}
+      }},
+    millcreek: { name:"Mill Creek", slug:"mill-creek", cx:150, cy:218, r:48, coords:"AOI 15 km radius · 39.02°N, −77.38°W",
+      desc:"river corridor by “Your home” on the Live map — wetter, greener, and historically low fire activity. Its baseline is much lower than the county’s.",
+      seed:2800, avg:[4,5,8,14,22,30,38,40,30,18,9,5], hotspots:16,
+      years:{
+        "2024":{months:[3,4,7,12,19,26,32,34,25,15,8,4],firedays:34,detections:"412",peak:"August",streak:"4 days",bannerClass:"ok",title:"2024 in Mill Creek was normal — and low",body:'Fire days ran <strong>5% below</strong> Mill Creek’s own 10-year average (test, <span class="mono">p = 0.61</span>). Comparing Mill Creek to the county average would overstate its risk by ~3×.'},
+        "2025":{months:[4,5,9,15,24,32,40,42,31,19,10,5],firedays:39,detections:"478",peak:"August",streak:"5 days",bannerClass:"ok",title:"2025 in Mill Creek stayed within its normal range",body:'Fire days ran <strong>9% above</strong> Mill Creek’s average (test, <span class="mono">p = 0.38</span> — not significant), even while the county trended hot. Location changes the verdict.'},
+        "2026":{months:[5,6,11,18,28,38,48,50,36,22,12,6],firedays:44,detections:"536",peak:"August",streak:"6 days",bannerClass:"ok",title:"2026 in Mill Creek is elevated, but not significantly above normal",body:'Fire days run <strong>19% above</strong> Mill Creek’s 10-year average (test, <span class="mono">p = 0.14</span> — not significant). The honest answer here is “watch,” not the county’s “significantly above.”'}
+      }},
+    fairview: { name:"Fairview / Downtown", slug:"fairview-downtown", cx:596, cy:108, r:52, coords:"AOI 20 km radius · 39.14°N, −77.05°W",
+      desc:"urban edge east of the valley — fewer wildland fires, later peak, more late-season activity from the corridor east of Downtown.",
+      seed:900, avg:[6,7,12,22,36,52,68,78,64,42,22,10], hotspots:26,
+      years:{
+        "2024":{months:[5,6,10,19,31,44,58,66,54,36,18,9],firedays:58,detections:"724",peak:"August",streak:"6 days",bannerClass:"ok",title:"2024 in Fairview / Downtown was within normal range",body:'Fire days ran <strong>3% below</strong> the Fairview 10-year average (test, <span class="mono">p = 0.71</span>).'},
+        "2025":{months:[7,8,14,26,42,60,76,86,70,46,24,12],firedays:71,detections:"892",peak:"August",streak:"8 days",bannerClass:"",title:"2025 in Fairview / Downtown trended hot in late season",body:'Fire days ran <strong>22% above</strong> average (test, <span class="mono">p = 0.09</span> — not significant), driven by September–October, not midsummer.'},
+        "2026":{months:[8,10,18,32,52,74,94,108,88,58,30,15],firedays:84,detections:"1,048",peak:"August",streak:"10 days",bannerClass:"",title:"2026 in Fairview / Downtown is significantly above its average",body:'Fire days run <strong>38% above</strong> the Fairview / Downtown 10-year average (test, <span class="mono">p = 0.03</span>), with the anomaly concentrated Aug–Oct. A county chart would hide that late-season shape.'}
+      }}
+  };
+  var MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var currentTrendLoc = "lincoln";
+  var currentTrendYear = "2026";
+  function currentLoc(){ return TREND_LOCS[currentTrendLoc]; }
+  function buildTrendHotspots(){
+    var loc = currentLoc(), r = seeded(5000 + loc.seed + (+currentTrendYear)), g = document.getElementById("trend-hotspots"), html = "";
+    for (var i = 0; i < loc.hotspots; i++){
+      var ang = r() * Math.PI * 2, dist = Math.sqrt(r()) * (loc.r - 8);
+      var x = Math.round(loc.cx + Math.cos(ang) * dist * 1.25), y = Math.round(loc.cy + Math.sin(ang) * dist * 0.78);
+      var rad = 3 + Math.round(r() * 4);
+      html += '<circle cx="' + x + '" cy="' + y + '" r="' + rad + '" fill="#ff5a1f" stroke="#ffd9bd" stroke-width="1.2" opacity=".92"><title>Harmonized hot spot in ' + loc.name + '</title></circle>';
+    }
+    if (g) g.innerHTML = html;
+    ["cedar","lincoln","fairview","mill"].forEach(function(k){
+      var el = document.getElementById("heat-" + k); if (!el) return;
+      var key = k === "mill" ? "millcreek" : k;
+      el.style.opacity = key === currentTrendLoc ? ".48" : ".14";
+    });
+  }
+  function drawChart(){
+    var loc = currentLoc(), data = loc.years[currentTrendYear], AVG = loc.avg;
+    var max = 160, bars = "", labels = "", pts = "";
+    for (var i = 0; i < 12; i++){
+      var x = 58 + i * 56, h = data.months[i] / max * 170, y = 200 - h;
+      var ah = AVG[i] / max * 170, ay = 200 - ah;
+      bars += '<rect x="' + x + '" y="' + y + '" width="30" height="' + h + '" rx="3.5" fill="var(--ember)" opacity="' + (data.months[i] >= AVG[i] ? "1" : ".55") + '"><title>' + MON[i] + ' · ' + loc.name + ': ' + data.months[i] + ' vs avg ' + AVG[i] + '</title></rect>';
+      pts += (58 + i * 56 + 15) + "," + ay + " ";
+      labels += '<text x="' + (x + 15) + '" y="220">' + MON[i] + '</text>';
+    }
+    document.getElementById("yoy-bars").innerHTML = bars;
+    document.getElementById("yoy-labels").innerHTML = labels;
+    document.getElementById("yoy-avg").setAttribute("d", "M" + pts.trim().split(" ").join(" L"));
+    document.getElementById("yoy-legend-year").textContent = currentTrendYear + " · " + loc.name + " (harmonized)";
+  }
+  function renderTrend(){
+    var loc = currentLoc(), d = loc.years[currentTrendYear]; if (!d) return;
+    Array.prototype.forEach.call(document.querySelectorAll("#year-row .year-btn"), function(b){ b.classList.toggle("on", b.getAttribute("data-year") === currentTrendYear); });
+    Array.prototype.forEach.call(document.querySelectorAll("#trend-loc-row .loc-chip"), function(b){ b.classList.toggle("on", b.getAttribute("data-trend-loc") === currentTrendLoc); });
+    document.getElementById("cal-year-out").textContent = currentTrendYear + " season";
+    document.getElementById("trend-area-out").textContent = loc.name;
+    document.getElementById("trend-area-name").textContent = loc.name;
+    document.getElementById("trend-area-desc").textContent = loc.desc;
+    document.getElementById("trend-area-coords").textContent = loc.coords;
+    document.getElementById("trend-frame-url").textContent = "plumeroute.app/trend?area=" + loc.slug;
+    document.getElementById("trend-map-chip").textContent = ("HISTORY MAP · " + loc.name + " · 2000—TODAY · HISTORY ONLY").toUpperCase();
+    document.getElementById("cal-loc-label").textContent = loc.name;
+    document.getElementById("chart-loc-label").textContent = loc.name;
+    document.getElementById("csv-loc-label").textContent = loc.name;
+    var sl = document.querySelector(".stat-loc"); if (sl) sl.textContent = loc.name;
+    var pl = document.getElementById("phone-trend-loc"); if (pl) pl.textContent = loc.name;
+    var pa = document.getElementById("phone-trend-aoi"); if (pa) pa.textContent = loc.name;
+    var pf = document.getElementById("phone-trend-for"); if (pf) pf.textContent = "for " + loc.name;
+    var aoi = document.getElementById("trend-aoi"), fill = document.getElementById("trend-aoi-fill"), cen = document.getElementById("trend-aoi-center");
+    [aoi, fill].forEach(function(el){ if(el){ el.setAttribute("cx", loc.cx); el.setAttribute("cy", loc.cy); el.setAttribute("r", loc.r); } });
+    if (cen){ cen.setAttribute("cx", loc.cx); cen.setAttribute("cy", loc.cy); }
+    document.getElementById("st-firedays").textContent = d.firedays;
+    document.getElementById("st-detections").textContent = d.detections;
+    document.getElementById("st-peak").textContent = d.peak;
+    document.getElementById("st-streak").textContent = d.streak;
+    var banner = document.getElementById("trend-banner");
+    banner.className = "trend-banner" + (d.bannerClass ? " " + d.bannerClass : "");
+    document.getElementById("tb-title").textContent = d.title;
+    document.getElementById("tb-body").innerHTML = d.body;
+    /* calendar intensity follows location: ridge hotter, Mill Creek cooler */
+    var boostBase = currentTrendLoc === "cedar" ? .14 : currentTrendLoc === "millcreek" ? -.18 : currentTrendLoc === "fairview" ? -.04 : 0;
+    var r = seeded((+currentTrendYear) + loc.seed), html = "";
+    for (var day = 0; day < 364; day++){
+      var month = Math.floor(day / (364 / 12));
+      var boost = (month >= 5 && month <= 9 ? .34 : month >= 3 && month <= 4 ? .12 : -.16) + boostBase;
+      html += '<i style="background:' + calColor(r, boost) + '"></i>';
+    }
+    document.getElementById("cal-main").innerHTML = html;
+    buildTrendHotspots();
+    drawChart();
+  }
+  function setYear(year){ if (!currentLoc().years[year]) return; currentTrendYear = year; renderTrend(); }
+  function setTrendLoc(key){ if (!TREND_LOCS[key]) return; currentTrendLoc = key; renderTrend(); }
+  document.getElementById("year-row").addEventListener("click", function(e){ var b = e.target.closest("[data-year]"); if (b) setYear(b.getAttribute("data-year")); });
+  document.getElementById("trend-loc-row").addEventListener("click", function(e){ var b = e.target.closest("[data-trend-loc]"); if (b) setTrendLoc(b.getAttribute("data-trend-loc")); });
+  Array.prototype.forEach.call(document.querySelectorAll(".trend-place"), function(g){ g.addEventListener("click", function(){ setTrendLoc(g.getAttribute("data-trend-loc")); }); });
+  var trendSearch = document.getElementById("trend-search");
+  if (trendSearch) trendSearch.addEventListener("input", function(){
+    var q = trendSearch.value.toLowerCase();
+    if (q.indexOf("cedar") > -1 || q.indexOf("ridge") > -1) setTrendLoc("cedar");
+    else if (q.indexOf("mill") > -1 || q.indexOf("creek") > -1 || q.indexOf("home") > -1) setTrendLoc("millcreek");
+    else if (q.indexOf("fair") > -1 || q.indexOf("down") > -1) setTrendLoc("fairview");
+    else if (q.indexOf("lincoln") > -1 || q.indexOf("county") > -1 || q.indexOf("school") > -1) setTrendLoc("lincoln");
+  });
+  var followBtn = document.getElementById("trend-follow-live");
+  if (followBtn) followBtn.addEventListener("click", function(){
+    var mapLive = { school:"lincoln", downtown:"fairview", highway:"lincoln", home:"millcreek" };
+    setTrendLoc(mapLive[currentLivePlace] || "lincoln");
+    document.getElementById("trend-map").scrollIntoView({ behavior:"smooth", block:"center" });
+  });
+  var csvBtn = document.getElementById("trend-csv-btn");
+  if (csvBtn) csvBtn.addEventListener("click", function(){
+    var loc = currentLoc(), d = loc.years[currentTrendYear];
+    var rows = ["location,year,month,detections_harmonized,ten_year_average"];
+    for (var i = 0; i < 12; i++) rows.push([loc.name, currentTrendYear, MON[i], d.months[i], loc.avg[i]].join(","));
+    var blob = new Blob([rows.join("\n")], { type:"text/csv" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "plumeroute-hotspots-" + loc.slug + "-" + currentTrendYear + ".csv"; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function(){ URL.revokeObjectURL(a.href); }, 800);
+  });
+  renderTrend();
+
+  /* ---------- copy buttons ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function(btn){
+    btn.addEventListener("click", function(){
+      var src = document.getElementById(btn.getAttribute("data-copy"));
+      if (!src) return;
+      var text = src.textContent;
+      function done(){
+        var old = btn.textContent; btn.textContent = "Copied ✓"; btn.classList.add("done");
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove("done"); }, 1600);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        var ta = document.createElement("textarea");
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); } catch(e){}
+        document.body.removeChild(ta); done();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

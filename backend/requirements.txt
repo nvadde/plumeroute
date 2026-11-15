@@ -1,0 +1,7 @@
+# Pinned exact versions, verified against backend/.venv
+# (venv uses --system-site-packages; PyPI is unreachable from this machine,
+# so install where you have network access)
+fastapi==0.162.7
+uvicorn==0.34.3
+requests==2.32.3
+python-dotenv==0.21.0

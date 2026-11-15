@@ -7,3 +7,9 @@ dist/
 .npm-cache/
 backend/data/
 backend/data/
+tmp*/
+pip-*/
+frontend/harm-profile/
+frontend/.npm-tmp/
+*-profile/
+frontend/verify-*/
