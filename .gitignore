@@ -1,0 +1,9 @@
+.env
+node_modules/
+__pycache__/
+.venv/
+backend/.venv/
+dist/
+.npm-cache/
+backend/data/
+backend/data/
